@@ -829,6 +829,10 @@ server.http().listen(3000);
 Highlighting [issues](https://github.com/tedeh/rj/issues) or submitting pull
 requests on [Github](https://github.com/tedeh/rj) is most welcome.
 
+[jsonrpc-spec]: http://jsonrpc.org/spec.html 
+[jsonrpc1-spec]: http://json-rpc.org/wiki/specification
+[node.js]: http://nodejs.org/
+
 [npm-image]: https://badge.fury.io/js/rj.svg
 [npm-url]: https://npmjs.org/package/rj
 [travis-image]: https://travis-ci.org/taoyuan/rj.svg?branch=master
