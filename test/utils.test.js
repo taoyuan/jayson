@@ -1,9 +1,9 @@
 var should = require('should');
 var PassStream = require('pass-stream');
-var rj = require(__dirname + '/..');
-var utils = rj.utils;
+var remjson = require(__dirname + '/..');
+var utils = remjson.utils;
 
-describe('RJ.Utils', function () {
+describe('RemJson.Utils', function () {
 
   describe('request', function () {
 

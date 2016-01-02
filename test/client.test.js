@@ -1,17 +1,17 @@
 var should = require('should');
-var rj = require(__dirname + '/..');
+var remjson = require(__dirname + '/..');
 var support = require(__dirname + '/support');
 var common = support.common;
 
-describe('RJ.Client', function () {
+describe('RemJson.Client', function () {
 
   it('should return an instance without using "new"', function () {
-    var client = rj.client(rj.server());
-    client.should.be.instanceof(rj.client);
+    var client = remjson.client(remjson.server());
+    client.should.be.instanceof(remjson.client);
   });
 
   it('should return a raw request if not passed a server', function () {
-    var client = new rj.Client();
+    var client = new remjson.Client();
     var request = client.request('add', [11, 9]);
     should.exist(request);
     request.should.have.property('method', 'add');
@@ -21,7 +21,7 @@ describe('RJ.Client', function () {
   });
 
   it('should return a raw request without a version 2 jsonrpc field if client is version 1', function () {
-    var client = new rj.Client({version: 1});
+    var client = new remjson.Client({version: 1});
     var request = client.request('add', [11, 9]);
     should.exist(request);
     request.should.not.have.property('jsonrpc');
@@ -29,8 +29,8 @@ describe('RJ.Client', function () {
 
   describe('instance', function () {
 
-    var server = rj.server(support.server.methods, support.server.options);
-    var client = rj.client(server, support.server.options);
+    var server = remjson.server(support.server.methods, support.server.options);
+    var client = remjson.client(server, support.server.options);
 
     describe('common tests', common(client));
 
@@ -271,10 +271,10 @@ describe('RJ.Client', function () {
   describe('request with options', function () {
 
     function OptionalClient() {
-      rj.Client.apply(this, arguments);
+      remjson.Client.apply(this, arguments);
     }
 
-    require('util').inherits(OptionalClient, rj.Client);
+    require('util').inherits(OptionalClient, remjson.Client);
 
     OptionalClient.prototype._request = function (request, options, callback) {
       var self = this;
@@ -285,7 +285,7 @@ describe('RJ.Client', function () {
       var expired;
 
       // serializes the request as a JSON string so that we get a copy and can run the replacer as intended
-      rj.Utils.JSON.stringify(request, this.options, function (err, message) {
+      remjson.Utils.JSON.stringify(request, this.options, function (err, message) {
         if (err) throw err;
 
         self.server.call(message, function (error, success) {
@@ -301,7 +301,7 @@ describe('RJ.Client', function () {
       });
     };
 
-    var server = rj.server(support.server.methods, support.server.options);
+    var server = remjson.server(support.server.methods, support.server.options);
     var client = new OptionalClient(server, support.server.options);
 
     it('should support request options', function (done) {

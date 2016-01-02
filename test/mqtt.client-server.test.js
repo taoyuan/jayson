@@ -2,7 +2,7 @@
 
 var should = require('should');
 var _ = require('lodash');
-var rj = require(__dirname + '/../');
+var remjson = require(__dirname + '/../');
 var support = require(__dirname + '/support');
 var common = support.common;
 var net = require('net');
@@ -22,7 +22,7 @@ var coder = {
   }
 };
 
-describe('RJ.Mqtt', function () {
+describe('RemJson.Mqtt', function () {
 
   describe('integration', function () {
 
@@ -32,8 +32,8 @@ describe('RJ.Mqtt', function () {
     };
 
     var mqttserver = buildMqttServer();
-    var server = rj.server(support.server.methods, support.server.options).mqtt(mqttserver.url, options);
-    var client = rj.client.mqtt(mqttserver.url, options);
+    var server = remjson.server(support.server.methods, support.server.options).mqtt(mqttserver.url, options);
+    var client = remjson.client.mqtt(mqttserver.url, options);
 
     before(function (done) {
       server.ready(function () {

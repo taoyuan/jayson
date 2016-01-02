@@ -1,14 +1,14 @@
 var should = require('should');
-var rj = require(__dirname + '/../lib');
+var remjson = require(__dirname + '/../lib');
 var support = require('./support');
 var exec = require('child_process').exec;
 var fs = require('fs');
 var url = require('url');
-var bin = __dirname + '/../bin/rj.js';
+var bin = __dirname + '/../bin/remjson.js';
 
-describe('RJ.Bin', function () {
+describe('RemJson.Bin', function () {
 
-  var server = rj.server(support.server.methods, support.server.options);
+  var server = remjson.server(support.server.methods, support.server.options);
   ;
 
   describe('port-listening http server', function () {

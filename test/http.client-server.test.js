@@ -1,11 +1,11 @@
 var should = require('should');
-var rj = require(__dirname + '/../');
+var remjson = require(__dirname + '/../');
 var support = require(__dirname + '/support');
 var common = support.common;
 var http = require('http');
 var url = require('url');
 
-describe('RJ.Http', function () {
+describe('RemJson.Http', function () {
 
   describe('server', function () {
 
@@ -16,7 +16,7 @@ describe('RJ.Http', function () {
     });
 
     it('should listen to a local port', function (done) {
-      server = rj.server(support.server.methods, support.server.options).http();
+      server = remjson.server(support.server.methods, support.server.options).http();
       server.listen(3000, 'localhost', done);
     });
 
@@ -28,14 +28,14 @@ describe('RJ.Http', function () {
 
   describe('client', function () {
 
-    var client = rj.client.http({
+    var client = remjson.client.http({
       reviver: support.server.options.reviver,
       replacer: support.server.options.replacer,
       host: 'localhost',
       port: 3000
     });
 
-    var server = rj.server(support.server.methods, support.server.options);
+    var server = remjson.server(support.server.methods, support.server.options);
     var server_http = server.http();
 
     before(function (done) {
@@ -82,7 +82,7 @@ describe('RJ.Http', function () {
 
     it('should accept a URL string as the first argument', function () {
       var urlStr = 'http://localhost:3000';
-      var client = rj.client.http(urlStr);
+      var client = remjson.client.http(urlStr);
       var urlObj = url.parse(urlStr);
       Object.keys(urlObj).forEach(function (key) {
         client.options.should.have.property(key, urlObj[key]);

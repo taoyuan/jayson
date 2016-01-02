@@ -1,10 +1,10 @@
 var should = require('should');
-var rj = require(__dirname + '/../');
+var remjson = require(__dirname + '/../');
 var support = require(__dirname + '/support');
 
-describe('RJ.Method', function () {
+describe('RemJson.Method', function () {
 
-  var Method = rj.Method;
+  var Method = remjson.Method;
 
   it('should return an instance when called as a function', function () {
     Method(function () {
@@ -46,7 +46,7 @@ describe('RJ.Method', function () {
       var server = null;
 
       beforeEach(function () {
-        server = new rj.Server();
+        server = new remjson.Server();
       });
 
       describe('options.collect true', function () {
@@ -282,7 +282,7 @@ describe('RJ.Method', function () {
 
         it('should give an INVALID_PARAMS error for wrong number of args passed', function (done) {
           method.execute(server, [1], function (err, sum) {
-            err.should.containDeep({code: rj.Server.errors.INVALID_PARAMS});
+            err.should.containDeep({code: remjson.Server.errors.INVALID_PARAMS});
             should(sum).not.be.ok;
             done();
           });
@@ -307,9 +307,9 @@ describe('RJ.Method', function () {
         });
 
         it('should call with scope', function (done) {
-          method.execute(server, {name: 'RJ'}, function (err, result) {
+          method.execute(server, {name: 'RemJson'}, function (err, result) {
             if (err) throw err;
-            result.should.eql('Hello, RJ');
+            result.should.eql('Hello, RemJson');
             done();
           });
         });

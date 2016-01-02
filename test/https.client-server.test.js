@@ -1,6 +1,6 @@
 var should = require('should');
 var fs = require('fs');
-var rj = require(__dirname + '/..');
+var remjson = require(__dirname + '/..');
 var support = require('./support');
 var common = support.common;
 var http = require('http');
@@ -13,7 +13,7 @@ var serverOptions = {
   cert: fs.readFileSync('./test/fixtures/keys/agent1-cert.pem')
 };
 
-describe('RJ.Https', function () {
+describe('RemJson.Https', function () {
 
   describe('server', function () {
 
@@ -24,7 +24,7 @@ describe('RJ.Https', function () {
     });
 
     it('should listen to a local port', function (done) {
-      server = rj.server(support.methods, support.options).https(serverOptions);
+      server = remjson.server(support.methods, support.options).https(serverOptions);
       server.listen(3000, 'localhost', done);
     });
 
@@ -36,9 +36,9 @@ describe('RJ.Https', function () {
 
   describe('client', function () {
 
-    var server = rj.server(support.server.methods, support.server.options);
+    var server = remjson.server(support.server.methods, support.server.options);
     var server_https = server.https(serverOptions);
-    var client = rj.client.https({
+    var client = remjson.client.https({
       reviver: support.server.options.reviver,
       replacer: support.server.options.replacer,
       host: 'localhost',
@@ -73,7 +73,7 @@ describe('RJ.Https', function () {
 
     it('should accept a URL string as the first argument', function () {
       var urlStr = 'https://localhost:3000';
-      var client = rj.client.https(urlStr);
+      var client = remjson.client.https(urlStr);
       var urlObj = url.parse(urlStr);
       Object.keys(urlObj).forEach(function (key) {
         client.options.should.have.property(key, urlObj[key]);

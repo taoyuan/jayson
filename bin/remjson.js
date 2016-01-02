@@ -6,10 +6,10 @@ var url = require('url');
 var util = require('util');
 
 var pkg = require('../package.json');
-var rj = require('../');
+var remjson = require('../');
 var program = require('commander');
 var eyes = require('eyes');
-var net = require('net')
+var net = require('net');
 
 // initialize program and define arguments
 program.version(pkg.version)
@@ -43,8 +43,8 @@ if (!(program.method && (program.url || program.socket))) {
 }
 
 var client = (program.socket && program.socket.host)
-  ? rj.client.tcp(program.socket)
-  : rj.client.http(program.url || program.socket);
+  ? remjson.client.tcp(program.socket)
+  : remjson.client.http(program.url || program.socket);
 
 std.out.noise(
   colorize('magenta', '-> %s(%s)'),

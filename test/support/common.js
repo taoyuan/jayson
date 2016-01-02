@@ -1,6 +1,6 @@
 var should = require('should');
 var support = require(__dirname);
-var rj = require(__dirname + '/../../');
+var remjson = require(__dirname + '/../../');
 var Counter = support.Counter;
 
 /**
@@ -12,7 +12,7 @@ var common = module.exports = function (client) {
 
   return function () {
 
-    it('should be an instance of rj.client', common.clientInstance(client));
+    it('should be an instance of remjson.client', common.clientInstance(client));
 
     it('should be able to request a success-method on the server', common.clientRequest(client));
 
@@ -29,7 +29,7 @@ var common = module.exports = function (client) {
 
 common.clientInstance = function (client) {
   return function () {
-    client.should.be.instanceof(rj.client);
+    client.should.be.instanceof(remjson.client);
   };
 };
 

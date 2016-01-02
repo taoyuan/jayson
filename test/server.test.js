@@ -1,11 +1,11 @@
 var should = require('should');
-var rj = require(__dirname + '/../');
+var remjson = require(__dirname + '/../');
 var support = require(__dirname + '/support');
-var utils = rj.utils;
+var utils = remjson.utils;
 
-describe('RJ.Server', function () {
+describe('RemJson.Server', function () {
 
-  var Server = rj.Server;
+  var Server = remjson.Server;
   var ServerErrors = Server.errors;
 
   it('should have an object of errors', function () {
@@ -13,7 +13,7 @@ describe('RJ.Server', function () {
   });
 
   it('should return an instance without using "new"', function () {
-    Server().should.be.instanceof(rj.Server);
+    Server().should.be.instanceof(remjson.Server);
   });
 
   describe('instance', function () {
@@ -33,7 +33,7 @@ describe('RJ.Server', function () {
       server.hasMethod('subtract').should.be.false;
     });
 
-    it('should pass options collect and params as defaults to rj.Method', function () {
+    it('should pass options collect and params as defaults to remjson.Method', function () {
       server.options.collect = true;
       server.options.params = Object;
       server.options.scope = Object;
@@ -148,11 +148,11 @@ describe('RJ.Server', function () {
 
     });
 
-    describe('rj.Client router', function () {
+    describe('remjson.Client router', function () {
       var client = null;
 
       beforeEach(function () {
-        client = rj.client(server, support.server.options);
+        client = remjson.client(server, support.server.options);
         server.options.router = function (method) {
           return client;
         };

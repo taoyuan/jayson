@@ -1,20 +1,20 @@
 var should = require('should');
 var _ = require('lodash');
-var rj = require(__dirname + '/../');
+var remjson = require(__dirname + '/../');
 var support = require(__dirname + '/support');
 var common = support.common;
 var net = require('net');
 var url = require('url');
 var JSONStream = require('JSONStream');
 
-describe('RJ.Tcp', function () {
+describe('RemJson.Tcp', function () {
 
   describe('server', function () {
 
     var server = null;
 
     before(function () {
-      server = rj.server(support.server.methods, support.server.options).tcp();
+      server = remjson.server(support.server.methods, support.server.options).tcp();
     });
 
     after(function () {
@@ -69,8 +69,8 @@ describe('RJ.Tcp', function () {
         });
 
         // write raw requests to the socket
-        socket.write(JSON.stringify(rj.Utils.request('delay', [20])));
-        socket.write(JSON.stringify(rj.Utils.request('delay', [5])));
+        socket.write(JSON.stringify(remjson.Utils.request('delay', [20])));
+        socket.write(JSON.stringify(remjson.Utils.request('delay', [5])));
 
         setTimeout(function () {
           replies.should.have.lengthOf(2);
@@ -86,9 +86,9 @@ describe('RJ.Tcp', function () {
 
   describe('client', function () {
 
-    var server = rj.server(support.server.methods, support.server.options);
+    var server = remjson.server(support.server.methods, support.server.options);
     var server_tcp = server.tcp();
-    var client = rj.client.tcp({
+    var client = remjson.client.tcp({
       reviver: support.server.options.reviver,
       replacer: support.server.options.replacer,
       host: 'localhost',

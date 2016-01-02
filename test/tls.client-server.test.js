@@ -1,6 +1,6 @@
 var should = require('should');
 var fs = require('fs');
-var rj = require(__dirname + '/..');
+var remjson = require(__dirname + '/..');
 var support = require('./support');
 var common = support.common;
 var JSONStream = require('JSONStream');
@@ -13,7 +13,7 @@ var serverOptions = {
   cert: fs.readFileSync('./test/fixtures/keys/agent1-cert.pem')
 };
 
-describe('RJ.Tls', function () {
+describe('RemJson.Tls', function () {
 
   describe('server', function () {
 
@@ -24,7 +24,7 @@ describe('RJ.Tls', function () {
     });
 
     it('should listen to a local port', function (done) {
-      server = rj.server(support.methods, support.options).tls(serverOptions);
+      server = remjson.server(support.methods, support.options).tls(serverOptions);
       server.listen(3000, 'localhost', done);
     });
 
@@ -36,9 +36,9 @@ describe('RJ.Tls', function () {
 
   describe('client', function () {
 
-    var server = rj.server(support.server.methods, support.server.options);
+    var server = remjson.server(support.server.methods, support.server.options);
     var server_tls = server.tls(serverOptions);
-    var client = rj.client.tls({
+    var client = remjson.client.tls({
       reviver: support.server.options.reviver,
       replacer: support.server.options.replacer,
       host: 'localhost',
