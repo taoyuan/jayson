@@ -1,5 +1,5 @@
 var should = require('should');
-var jayson = require(__dirname + '/../../');
+var rj = require(__dirname + '/../../');
 
 exports.Counter = require(__dirname + '/counter');
 

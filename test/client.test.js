@@ -1,17 +1,17 @@
 var should = require('should');
-var jayson = require(__dirname + '/..');
+var rj = require(__dirname + '/..');
 var support = require(__dirname + '/support');
 var common = support.common;
 
-describe('Jayson.Client', function() {
+describe('RJ.Client', function() {
 
   it('should return an instance without using "new"', function() {
-    var client = jayson.client(jayson.server());
-    client.should.be.instanceof(jayson.client);
+    var client = rj.client(rj.server());
+    client.should.be.instanceof(rj.client);
   });
 
   it('should return a raw request if not passed a server', function() {
-    var client = new jayson.Client();
+    var client = new rj.Client();
     var request = client.request('add', [11, 9]);
     should.exist(request);
     request.should.have.property('method', 'add');
@@ -21,16 +21,16 @@ describe('Jayson.Client', function() {
   });
 
   it('should return a raw request without a version 2 jsonrpc field if client is version 1', function() {
-    var client = new jayson.Client({version: 1});
+    var client = new rj.Client({version: 1});
     var request = client.request('add', [11, 9]);
     should.exist(request);
     request.should.not.have.property('jsonrpc');
   });
 
   describe('instance', function() {
-    
-    var server = jayson.server(support.server.methods, support.server.options);
-    var client = jayson.client(server, support.server.options);
+
+    var server = rj.server(support.server.methods, support.server.options);
+    var client = rj.client(server, support.server.options);
 
     describe('common tests', common(client));
 
@@ -102,7 +102,7 @@ describe('Jayson.Client', function() {
           done();
         });
       });
-    
+
     });
 
     it('should support specifying a request id generator', function(done) {
@@ -269,10 +269,10 @@ describe('Jayson.Client', function() {
   describe('request with options', function () {
 
     function OptionalClient() {
-      jayson.Client.apply(this, arguments);
+      rj.Client.apply(this, arguments);
     }
 
-    require('util').inherits(OptionalClient, jayson.Client);
+    require('util').inherits(OptionalClient, rj.Client);
 
     OptionalClient.prototype._request = function (request, options, callback) {
       var self = this;
@@ -283,7 +283,7 @@ describe('Jayson.Client', function() {
       var expired;
 
       // serializes the request as a JSON string so that we get a copy and can run the replacer as intended
-      jayson.Utils.JSON.stringify(request, this.options, function(err, message) {
+      rj.Utils.JSON.stringify(request, this.options, function(err, message) {
         if(err) throw err;
 
         self.server.call(message, function(error, success) {
@@ -299,7 +299,7 @@ describe('Jayson.Client', function() {
       });
     };
 
-    var server = jayson.server(support.server.methods, support.server.options);
+    var server = rj.server(support.server.methods, support.server.options);
     var client = new OptionalClient(server, support.server.options);
 
     it('should support request options', function (done) {

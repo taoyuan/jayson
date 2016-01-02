@@ -1,6 +1,8 @@
 # Language/versions
 language: node_js
 node_js:
+  - "v5"
+  - "v4"
   - "iojs"
   - "0.12"
   - "0.10"
@@ -8,8 +10,3 @@ node_js:
 
 # Build script
 script: 'make test'
-
-# Notifications
-notifications:
- email:
-   - notify+mail@tedeh.net

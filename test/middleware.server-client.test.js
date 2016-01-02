@@ -1,14 +1,14 @@
 var should = require('should');
 var support = require('./support');
 var common = support.common;
-var jayson = require(__dirname + '/..');
+var rj = require(__dirname + '/..');
 var connect = require('connect');
 
-describe('Jayson.Middleware', function() {
+describe('RJ.Middleware', function() {
 
   var app = connect.createServer();
   var server = null; // set in before()
-  var client = jayson.client.http({
+  var client = rj.client.http({
     reviver: support.server.options.reviver,
     replacer: support.server.options.replacer,
     host: 'localhost',
@@ -17,7 +17,7 @@ describe('Jayson.Middleware', function() {
 
   before(function(done) {
     app.use(connect.json({reviver: support.server.options.reviver}));
-    app.use(jayson.server(support.server.methods, support.server.options).middleware());
+    app.use(rj.server(support.server.methods, support.server.options).middleware());
     server = app.listen(3000, done);
   });
 
@@ -31,7 +31,7 @@ describe('Jayson.Middleware', function() {
 
     before(function() {
       // change last connect stack handle to one with new options
-      app.stack[app.stack.length - 1].handle = jayson.server(support.server.methods, support.server.options).middleware({
+      app.stack[app.stack.length - 1].handle = rj.server(support.server.methods, support.server.options).middleware({
         end: false
       });
     });
@@ -50,7 +50,7 @@ describe('Jayson.Middleware', function() {
         done();
       });
     });
-  
+
   });
 
 });

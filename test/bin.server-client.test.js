@@ -1,14 +1,14 @@
 var should = require('should');
-var jayson = require(__dirname + '/../lib');
+var rj = require(__dirname + '/../lib');
 var support = require('./support');
 var exec = require('child_process').exec;
 var fs = require('fs');
 var url = require('url');
-var bin = __dirname + '/../bin/jayson.js';
+var bin = __dirname + '/../bin/rj.js';
 
-describe('Jayson.Bin', function() {
+describe('RJ.Bin', function() {
 
-  var server = jayson.server(support.server.methods, support.server.options);;
+  var server = rj.server(support.server.methods, support.server.options);;
 
   describe('port-listening http server', function() {
 

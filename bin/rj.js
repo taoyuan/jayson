@@ -6,7 +6,7 @@ var url = require('url');
 var util = require('util');
 
 var pkg = require('../package.json');
-var jayson = require('../');
+var rj = require('../');
 var program = require('commander');
 var eyes = require('eyes');
 var net = require('net')
@@ -43,8 +43,8 @@ if(!(program.method && (program.url || program.socket))) {
 }
 
 var client = (program.socket && program.socket.host)
-  ? jayson.client.tcp(program.socket)
-  : jayson.client.http(program.url || program.socket);
+  ? rj.client.tcp(program.socket)
+  : rj.client.http(program.url || program.socket);
 
 std.out.noise(
   colorize('magenta', '-> %s(%s)'),
@@ -79,7 +79,7 @@ function parseSocket(value) {
 
 function colorize(color, format) {
   return program.color
-       ? eyes.stylize(format, color, {}) 
+       ? eyes.stylize(format, color, {})
        : format;
 }
 
@@ -99,6 +99,6 @@ function getPrinter(options) {
     result: function() {
       return fn.apply(console, arguments);
     }
-  
+
   };
 }

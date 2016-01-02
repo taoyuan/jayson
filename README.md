@@ -1,14 +1,8 @@
-# Jayson
+# RJ
 
-Jayson is a [JSON-RPC 2.0][jsonrpc-spec] compliant server and client written in JavaScript for [node.js][node.js] that aims to be as simple as possible to use.
+RJ is a [JSON-RPC 2.0][jsonrpc-spec] compliant server and client written in JavaScript for [node.js][node.js] that aims to be as simple as possible to use.
 
-[jsonrpc-spec]: http://jsonrpc.org/spec.html 
-[jsonrpc1-spec]: http://json-rpc.org/wiki/specification
-[node.js]: http://nodejs.org/
-[travis]: https://travis-ci.org/tedeh/jayson
-[travis-img]: https://travis-ci.org/tedeh/jayson.png?branch=master
-
-**Build status:** [![Build Status][travis-img]][travis] 
+**Build status:** [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
 
 ## Table of contents
 
@@ -56,10 +50,10 @@ A basic JSON-RPC 2.0 server via HTTP:
 Server in [examples/simple_example/server.js](examples/simple_example/server.js):
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 
 // create a server
-var server = jayson.server({
+var server = rj.server({
   add: function(a, b, callback) {
     callback(null, a + b);
   }
@@ -72,10 +66,10 @@ server.http().listen(3000);
 Client in [examples/simple_example/client.js](examples/simple_example/client.js) invoking `add` on the above server:
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 
 // create a client
-var client = jayson.client.http({
+var client = rj.client.http({
   port: 3000,
   hostname: 'localhost'
 });
@@ -89,7 +83,7 @@ client.request('add', [1, 1], function(err, error, response) {
 
 ## Installation
 
-Install the latest version of _jayson_ from [npm](https://github.com/isaacs/npm) by executing `npm install jayson` in your shell. Do a global install with `npm install --global jayson` if you want the `jayson` client CLI in your PATH.
+Install the latest version of _jayson_ from [npm](https://github.com/isaacs/npm) by executing `npm install rj` in your shell. Do a global install with `npm install --global rj` if you want the `rj` client CLI in your PATH.
 
 ## Changelog (notable milestones)
 
@@ -108,11 +102,11 @@ Install the latest version of _jayson_ from [npm](https://github.com/isaacs/npm)
 
 ### CLI client
 
-There is a CLI client in `bin/jayson.js` and it should be available as `jayson` in your shell if you installed the package with the `--global` switch. Run `jayson --help` to see how it works.
+There is a CLI client in `bin/rj.js` and it should be available as `rj` in your shell if you installed the package with the `--global` switch. Run `rj --help` to see how it works.
 
 ## Requirements
 
-Jayson does not have any special dependencies that cannot be resolved with a simple `npm install`. It is being continuously tested using [travis-ci](https://travis-ci.org/) on the following versions:
+RJ does not have any special dependencies that cannot be resolved with a simple `npm install`. It is being continuously tested using [travis-ci](https://travis-ci.org/) on the following versions:
 
 - node.js v0.8.x
 - node.js v0.10.x
@@ -121,7 +115,7 @@ Jayson does not have any special dependencies that cannot be resolved with a sim
 
 ## Class documentation
 
-In addition to this document, a comprehensive class documentation made with [jsdoc][jsdoc-spec] is available at [jayson.tedeh.net](http://jayson.tedeh.net).
+In addition to this document, a comprehensive class documentation made with [jsdoc][jsdoc-spec] is available at [rj.tedeh.net](http://rj.tedeh.net).
 
 [jsdoc-spec]: http://usejsdoc.org/
 
@@ -138,7 +132,7 @@ In addition to this document, a comprehensive class documentation made with [jsd
 
 ### Client
 
-The client is available as the `Client` or `client` property of `require('jayson')`.
+The client is available as the `Client` or `client` property of `require('rj')`.
 
 #### Client interface description
 
@@ -152,7 +146,7 @@ Every client supports these options:
 
 * `reviver` -> Function to use as a JSON reviver
 * `replacer` -> Function to use as a JSON replacer
-* `generator` -> Function to generate request ids with. If omitted, Jayson will just generate a "random" number that is [RFC4122][rfc_4122_spec] compliant and looks similar to this: `3d4be346-b5bb-4e28-bc4a-0b721d4f9ef9`
+* `generator` -> Function to generate request ids with. If omitted, RJ will just generate a "random" number that is [RFC4122][rfc_4122_spec] compliant and looks similar to this: `3d4be346-b5bb-4e28-bc4a-0b721d4f9ef9`
 * `version` -> Can be either `1` or `2` depending on which specification should be followed in communicating with the server. Defaults to `2` for [JSON-RPC 2.0][jsonrpc-spec]
 
 [rfc_4122_spec]: http://www.ietf.org/rfc/rfc4122.txt
@@ -176,8 +170,8 @@ The HTTP server will emit the following events:
 It is possible to pass a string URL as the first argument. The URL will be run through [url.parse][nodejs_docs_url_parse]. Example:
 
 ```javascript
-var jayson = require(__dirname + '/../..');
-var client = jayson.client.http('http://localhost:3000');
+var rj = require(__dirname + '/../..');
+var client = rj.client.http('http://localhost:3000');
 // client.options is now the result of url.parse
 ```
 
@@ -208,9 +202,9 @@ Notification requests are for cases where the reply from the server is not impor
 Client in [examples/notifications/client.js](examples/notifications/client.js) doing a notification request:
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 
-var client = jayson.client.http({
+var client = rj.client.http({
   host: 'localhost',
   port: 3000
 });
@@ -224,9 +218,9 @@ client.request('ping', [], null, function(err) {
 A server in [examples/notifications/server.js](examples/notifications/server.js):
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 
-var server = jayson.server({
+var server = rj.server({
   ping: function(callback) {
     // do something
     callback();
@@ -241,17 +235,17 @@ server.http().listen(3000);
 * Any value that the server returns will be discarded when doing a notification request.
 * Omitting the third argument `null` to `Client.prototype.request` does not generate a notification request. This argument has to be set explicitly to `null` for this to happen.
 * Network errors and the like will still reach the callback. When the callback is invoked (with or without error) one can be certain that the server has received the request.
-* See the [Official JSON-RPC 2.0 Specification][jsonrpc-spec] for additional information on how Jayson handles notifications that are erroneous.
+* See the [Official JSON-RPC 2.0 Specification][jsonrpc-spec] for additional information on how RJ handles notifications that are erroneous.
 
 #### Batches
 
-A batch request is an array of individual requests that are sent to the server as one. Doing a batch request is very simple in Jayson and consists of constructing an `Array` of individual requests (created by not passing a callback to `Client.prototype.request`) that is then itself passed to `Client.prototype.request`. 
+A batch request is an array of individual requests that are sent to the server as one. Doing a batch request is very simple in RJ and consists of constructing an `Array` of individual requests (created by not passing a callback to `Client.prototype.request`) that is then itself passed to `Client.prototype.request`. 
 
 Client example in [examples/batch_request/client.js](examples/batch_request/client.js):
 
 ```javascript
-var jayson = require(__dirname + '/../..');
-var client = jayson.client.http({
+var rj = require(__dirname + '/../..');
+var client = rj.client.http({
   host: 'localhost',
   port: 3000
 });
@@ -282,9 +276,9 @@ client.request(batch, function(err, errors, successes) {
 Server example in [examples/batch_request/server.js](examples/batch_request/server.js):
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 
-var server = jayson.server({
+var server = rj.server({
   add: function(a, b, callback) {
     callback(null, a + b);
   }
@@ -295,7 +289,7 @@ server.http().listen(3000);
 
 ##### Notes
 
-* See the [Official JSON-RPC 2.0 Specification][jsonrpc-spec] for additional information on how Jayson handles different types of batches, mainly with regards to notifications, request errors and so forth.
+* See the [Official JSON-RPC 2.0 Specification][jsonrpc-spec] for additional information on how RJ handles different types of batches, mainly with regards to notifications, request errors and so forth.
 * There is no guarantee that the results will be in the same order as request Array `request`. To find the right result, compare the ID from the request with the ID in the result yourself.
 
 #### Client callback syntactic sugar
@@ -316,7 +310,7 @@ A client will emit the following events (in addition to any special ones emitted
 
 ### Server
 
-The server classes are available as the `Server` or `server` property of `require('jayson')`.
+The server classes are available as the `Server` or `server` property of `require('rj')`.
 
 The server also sports several interfaces that can be accessed as properties of an instance of `Server`.
 
@@ -359,7 +353,7 @@ Uses the same options as the base class. Inherits from [http.Server][nodejs_doc_
 
 ##### Server.https
 
-Uses the same options as the base class. Inherits from [https.Server][nodejs_doc_https_server] and `jayson.Server.http`. For information on how to configure certificates, [see the documentation on https.Server][nodejs_doc_https_server].
+Uses the same options as the base class. Inherits from [https.Server][nodejs_doc_https_server] and `rj.Server.http`. For information on how to configure certificates, [see the documentation on https.Server][nodejs_doc_https_server].
 
 ##### Server.middleware
 
@@ -372,17 +366,17 @@ The middleware supports the following options:
 Middleware example in [examples/middleware/server.js](examples/middleware/server.js):
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 var connect = require('connect');
 var app = connect();
 
-var server = jayson.server({
+var server = rj.server({
   add: function(a, b, callback) {
     callback(null, a + b);
   }
 });
 
-// parse request body before the jayson middleware
+// parse request body before the rj middleware
 app.use(connect.bodyParser());
 app.use(server.middleware());
 
@@ -391,14 +385,14 @@ app.listen(3000);
 
 #### Using many server interfaces at the same time
 
-A Jayson server can use many interfaces at the same time.
+A RJ server can use many interfaces at the same time.
 
 Server in [examples/many_interfaces/server.js](examples/many_interfaces/server.js) that listens to both `http` and a `https` requests:
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 
-var server = jayson.server({
+var server = rj.server({
   add: function(a, b, callback) {
     return callback(null, a + b);
   }
@@ -429,11 +423,11 @@ Passing an instance of a client as a method to the server makes the server relay
 Public server in [examples/relay/server_public.js](examples/relay/server_public.js) listening on `*:3000`:
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 
 // create a server where "add" will relay a localhost-only server
-var server = jayson.server({
-  add: jayson.client.http({
+var server = rj.server({
+  add: rj.client.http({
     hostname: 'localhost',
     port: 3001
   })
@@ -448,9 +442,9 @@ server.http().listen(3000, function() {
 Private server in [examples/relay/server_private.js](examples/relay/server_private.js) listening on localhost:3001:
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 
-var server = jayson.server({
+var server = rj.server({
   add: function(a, b, callback) {
     callback(null, a + b);
   }
@@ -471,7 +465,7 @@ Passing a property named `router` in the server options will enable you to write
 Server with custom routing logic in [examples/method_routing/server.js](examples/method_routing/server.js):
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 var format = require('util').format;
 
 var methods = {
@@ -480,7 +474,7 @@ var methods = {
   }
 };
 
-var server = jayson.server(methods, {
+var server = rj.server(methods, {
   router: function(method) {
     // regular by-name routing first
     if(typeof(this._methods[method]) === 'function') return this._methods[method];
@@ -494,10 +488,10 @@ server.http().listen(3000);
 Client in [examples/method_routing/client.js](examples/method_routing/client.js) invoking `add_2` on the above server:
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 
 // create a client
-var client = jayson.client.http({
+var client = rj.client.http({
   port: 3000,
   hostname: 'localhost'
 });
@@ -513,7 +507,7 @@ An example of nested routes where each property is separated by a dot (you do no
 
 ```javascript
 var _ = require('lodash');
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 
 var methods = {
   foo: {
@@ -530,7 +524,7 @@ var methods = {
 
 // this reduction produces an object like this: {'foo.bar': [Function], 'math.add': [Function]}
 var map = _.reduce(methods, collapse('', '.'), {});
-var server = jayson.server(map);
+var server = rj.server(map);
 
 function collapse(stem, sep) {
   return function(map, value, key) {
@@ -547,22 +541,22 @@ function collapse(stem, sep) {
 
 * If `router` does not return anything, the reserver will respond with a `Method Not Found` error.
 * The `Server.prototype` methods `method`, `methods`, `removeMethod` and `hasMethod` will not use the `router` method, but will operate on the internal `Server.prototype._methods` map.
-* The `router` method is expected to return instances of jayson.Method (new in 1.2)
+* The `router` method is expected to return instances of rj.Method (new in 1.2)
 
 #### Method definition
 
-You can also define server methods inside a wrapping object named `jayson.Method`. This allows additional options about the method to be specified. It is possible to define what kind of params it expects, default values for these params, and wheter or not all JSON-RPC params should be collected in a single argument to the function. Using this wrapper, it is for instance trivial to have your method accept a variable amount of arguments.
+You can also define server methods inside a wrapping object named `rj.Method`. This allows additional options about the method to be specified. It is possible to define what kind of params it expects, default values for these params, and wheter or not all JSON-RPC params should be collected in a single argument to the function. Using this wrapper, it is for instance trivial to have your method accept a variable amount of arguments.
 
 Server example showcasing most features in [examples/method_definitions/server.js](examples/method_definitions/server.js):
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 var _ = require('lodash');
 
 var methods = {
 
   // this method gets the raw params as first arg to handler
-  addCollect: new jayson.Method({
+  addCollect: new rj.Method({
     handler: function(args, done) {
       var total = sum(args);
       done(null, total);
@@ -571,7 +565,7 @@ var methods = {
   }),
 
   // specifies some default values (alternate definition too)
-  addDefault: jayson.Method(function(args, done) {
+  addDefault: rj.Method(function(args, done) {
     var total = sum(args);
     done(null, total);
   }, {
@@ -580,7 +574,7 @@ var methods = {
   }),
 
   // this method returns true when it gets an array (which it always does)
-  acceptArray: new jayson.Method({
+  acceptArray: new rj.Method({
     handler: function(args, done) {
       var result = _.isArray(args);
       done(null, result);
@@ -591,7 +585,7 @@ var methods = {
 
 };
 
-var server = jayson.server(methods);
+var server = rj.server(methods);
 
 server.http().listen(3000);
 
@@ -606,10 +600,10 @@ function sum(list) {
 Client example in [examples/method_definitions/client.js](examples/method_definitions/client.js):
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 
 // create a client
-var client = jayson.client.http({
+var client = rj.client.http({
   port: 3000,
   hostname: 'localhost'
 });
@@ -641,7 +635,7 @@ client.request('acceptArray', {a: 5, b: 2, c: 9}, function(err, response) {
 
 ##### Notes
 
-* Adding methods as a plain JavaScript function creates an instance of `jayson.Method` internally. For backwards compatibility it will be created with the option "collect" set to `false`. It is possible to affect this by passing the `collect` option to the server. This works similarly for the `params` option.
+* Adding methods as a plain JavaScript function creates an instance of `rj.Method` internally. For backwards compatibility it will be created with the option "collect" set to `false`. It is possible to affect this by passing the `collect` option to the server. This works similarly for the `params` option.
 
 #### Server events
 
@@ -656,9 +650,9 @@ In addition to events that are specific to certain interfaces, all servers will 
 If you should like to return an error from an method request to indicate a failure, remember that the [JSON-RPC 2.0][jsonrpc-spec] specification requires the error to be an `Object` with a `code (Integer/Number)` to be regarded as valid. You can also provide a `message (String)` and a `data (Object)` with additional information. Example: 
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 
-var server = jayson.server({
+var server = rj.server({
   i_cant_find_anything: function(id, callback) {
     var error = {code: 404, message: 'Cannot find ' + id};
     callback(error); // will return the error object as given
@@ -676,9 +670,9 @@ It is also possible to cause a method to return one of the predefined [JSON-RPC 
 [jsonrpc-spec#error_object]: http://jsonrpc.org/spec.html#error_object
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 
-var server = jayson.server({
+var server = rj.server({
   invalid_params: function(id, callback) {
     var error = this.error(-32602); // returns an error with the default properties set
     callback(error);
@@ -689,9 +683,9 @@ var server = jayson.server({
 You can even override the default messages:
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 
-var server = jayson.server({
+var server = rj.server({
   error_giver_of_doom: function(callback) {
     callback(true) // invalid error format, which causes an Internal Error to be returned instead
   }
@@ -703,7 +697,7 @@ server.errorMessages[Server.errors.INTERNAL_ERROR] = 'I has a sad. I cant do any
 
 ### Revivers and Replacers
 
-JSON lacks support for representing types other than the simple ones defined in the [JSON specification][jsonrpc-spec]. Fortunately the JSON methods in JavaScript (`JSON.parse` and `JSON.stringify`) provide options for custom serialization/deserialization routines. Jayson allows you to pass your own routines as options to both clients and servers.
+JSON lacks support for representing types other than the simple ones defined in the [JSON specification][jsonrpc-spec]. Fortunately the JSON methods in JavaScript (`JSON.parse` and `JSON.stringify`) provide options for custom serialization/deserialization routines. RJ allows you to pass your own routines as options to both clients and servers.
 
 Simple example transferring the state of an object between a client and a server:
 
@@ -738,7 +732,7 @@ exports.reviver = function(key, value) {
 Server in [examples/reviving_and_replacing/server.js](examples/reviving_and_replacing/server.js):
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 var shared = require('./shared');
 
 // Set the reviver/replacer options
@@ -748,7 +742,7 @@ var options = {
 };
 
 // create a server
-var server = jayson.server({
+var server = rj.server({
   increment: function(counter, callback) {
     counter.increment();
     callback(null, counter);
@@ -762,11 +756,11 @@ server.http().listen(3000);
 A client in [examples/reviving_and_replacing/client.js](examples/reviving_and_replacing/client.js) invoking "increment" on the server:
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 var shared = require('./shared');
 
 // create a client with the shared reviver and replacer
-var client = jayson.client.http({
+var client = rj.client.http({
   port: 3000,
   hostname: 'localhost',
   reviver: shared.reviver,
@@ -796,9 +790,9 @@ It is possible to specify named parameters when doing a client request by passin
 Client example in [examples/named_parameters/client.js](examples/named_parameters/client.js):
 
 ```javascript
-var jayson = require(__dirname + '/../../');
+var rj = require(__dirname + '/../../');
 
-var client = jayson.client.http({
+var client = rj.client.http({
   host: 'localhost',
   port: 3000
 });
@@ -813,9 +807,9 @@ client.request('add', {b: 1, a: 2}, function(err, error, response) {
 Server example in [examples/named_parameters/server.js](examples/named_parameters/server.js):
 
 ```javascript
-var jayson = require(__dirname + '/../..');
+var rj = require(__dirname + '/../..');
 
-var server = jayson.server({
+var server = rj.server({
   add: function(a, b, callback) {
     callback(null, a + b);
   }
@@ -826,11 +820,20 @@ server.http().listen(3000);
 
 #### Notes
 
-* If requesting methods on a Jayson server, arguments left out will be `undefined`
+* If requesting methods on a RJ server, arguments left out will be `undefined`
 * Too many arguments or arguments with invalid names will be ignored
 * It is assumed that the last argument to a server method is the callback and it will not be filled with something else
 
 ### Contributing
 
-Highlighting [issues](https://github.com/tedeh/jayson/issues) or submitting pull
-requests on [Github](https://github.com/tedeh/jayson) is most welcome.
+Highlighting [issues](https://github.com/tedeh/rj/issues) or submitting pull
+requests on [Github](https://github.com/tedeh/rj) is most welcome.
+
+[npm-image]: https://badge.fury.io/js/rj.svg
+[npm-url]: https://npmjs.org/package/rj
+[travis-image]: https://travis-ci.org/taoyuan/rj.svg?branch=master
+[travis-url]: https://travis-ci.org/taoyuan/rj
+[daviddm-image]: https://david-dm.org/taoyuan/rj.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/taoyuan/rj
+[coveralls-image]: https://coveralls.io/repos/taoyuan/rj/badge.svg
+[coveralls-url]: https://coveralls.io/r/taoyuan/rj

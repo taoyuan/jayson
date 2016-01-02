@@ -1,15 +1,15 @@
 var should = require('should');
-var jayson = require(__dirname + '/..');
+var rj = require(__dirname + '/..');
 var support = require('./support');
 var common = support.common;
 
-describe('Jayson.Relay', function() {
+describe('RJ.Relay', function() {
 
   describe('server', function() {
 
     it('should be created with a client as a method', function() {
-      var server = jayson.server(support.methods, support.server.options);
-      jayson.server({add: jayson.client(server)}, support.server.options);
+      var server = rj.server(support.methods, support.server.options);
+      rj.server({add: rj.client(server)}, support.server.options);
     });
 
   });
@@ -18,10 +18,10 @@ describe('Jayson.Relay', function() {
 
     var options = support.server.options;
 
-    var front_server = jayson.server({}, options);
-    var back_server = jayson.server(support.server.methods, options);
-    var relay_client = jayson.client(back_server, options);
-    var front_client = jayson.client(front_server, options);
+    var front_server = rj.server({}, options);
+    var back_server = rj.server(support.server.methods, options);
+    var relay_client = rj.client(back_server, options);
+    var front_client = rj.client(front_server, options);
 
     // replace all methods in front server with the client
     Object.keys(back_server._methods).forEach(function(name) {

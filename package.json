@@ -1,5 +1,5 @@
 {
-  "name": "jayson",
+  "name": "rj",
   "version": "1.2.2",
   "description": "JSON-RPC 1.0/2.0 compliant server and client",
   "license": "MIT",
@@ -22,20 +22,23 @@
     "tls",
     "api"
   ],
-  "author": "Tedde Lundgren <mail@tedeh.net> (http://tedeh.net)",
+  "author": [
+    "Yuan Tao <towyuan@outlook.com>",
+    "Tedde Lundgren <mail@tedeh.net> (http://tedeh.net)"
+  ],
   "maintainers": "Tedde Lundgren <mail@tedeh.net> (http://tedeh.net)",
-  "bin": "./bin/jayson.js",
+  "bin": "./bin/rj.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/tedeh/jayson.git"
+    "url": "git://github.com/taoyuan/rj.git"
   },
-  "homepage": "http://jayson.tedeh.net",
-  "bugs": "https://github.com/tedeh/jayson/issues",
+  "bugs": "https://github.com/taoyuan/rj/issues",
   "main": "index",
   "engines": {
     "node": ">= 0.4.0"
   },
   "contributors": [
+    "Yuan Tao <towyuan@outlook.com>",
     "Tedde Lundgren <mail@tedeh.net> (http://tedeh.net)",
     "Daniel Vicory <dvicory@gmail.com> (http://bzfx.net)",
     "Jonathan Liu <net147@gmail.com>"

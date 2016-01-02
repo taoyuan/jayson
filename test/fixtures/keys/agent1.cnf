@@ -9,8 +9,8 @@ prompt                 = no
 C                      = AA
 ST                     = State
 L                      = Locality
-O                      = Jayson
-OU                     = Jayson
+O                      = RJ
+OU                     = RJ
 CN                     = localhost
 emailAddress           = mail@tedeh.net
 

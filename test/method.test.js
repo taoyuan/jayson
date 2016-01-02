@@ -1,10 +1,10 @@
 var should = require('should');
-var jayson = require(__dirname + '/../');
+var rj = require(__dirname + '/../');
 var support = require(__dirname + '/support');
 
-describe('Jayson.Method', function() {
+describe('RJ.Method', function() {
 
-  var Method = jayson.Method;
+  var Method = rj.Method;
 
   it('should return an instance when called as a function', function() {
     Method(function() {}).should.be.instanceof(Method);
@@ -36,7 +36,7 @@ describe('Jayson.Method', function() {
         var method = new Method(fn);
         method.getHandler().should.equal(fn);
       });
-    
+
     });
 
     describe('execute', function() {
@@ -44,7 +44,7 @@ describe('Jayson.Method', function() {
       var server = null;
 
       beforeEach(function() {
-        server = new jayson.Server();
+        server = new rj.Server();
       });
 
       describe('options.collect true', function() {
@@ -80,7 +80,7 @@ describe('Jayson.Method', function() {
               done();
             });
           });
-        
+
         });
 
         describe('options.params Object', function() {
@@ -120,7 +120,7 @@ describe('Jayson.Method', function() {
               done();
             });
           });
-        
+
         });
 
         describe('options.params list of params', function() {
@@ -159,7 +159,7 @@ describe('Jayson.Method', function() {
               done();
             });
           });
-        
+
         });
 
         describe('options.params map of default values', function() {
@@ -198,7 +198,7 @@ describe('Jayson.Method', function() {
               done();
             });
           });
-        
+
         });
 
         describe('options.params undefined', function() {
@@ -245,9 +245,9 @@ describe('Jayson.Method', function() {
             method = new Method(fn, {collect: true});
             method.execute(server, {a: 1, b: 2, c: 3}, done);
           });
-        
+
         });
-      
+
       });
 
       describe('options.collect false', function() {
@@ -280,12 +280,12 @@ describe('Jayson.Method', function() {
 
         it('should give an INVALID_PARAMS error for wrong number of args passed', function(done) {
           method.execute(server, [1], function(err, sum) {
-            err.should.containDeep({code: jayson.Server.errors.INVALID_PARAMS});
+            err.should.containDeep({code: rj.Server.errors.INVALID_PARAMS});
             should(sum).not.be.ok;
             done();
           });
         });
-      
+
       });
 
       describe('options.scope provided', function() {
@@ -305,17 +305,17 @@ describe('Jayson.Method', function() {
         });
 
         it('should call with scope', function(done) {
-          method.execute(server, {name: 'Jayson'}, function(err, result) {
+          method.execute(server, {name: 'RJ'}, function(err, result) {
             if(err) throw err;
-            result.should.eql('Hello, Jayson');
+            result.should.eql('Hello, RJ');
             done();
           });
         });
 
       });
-    
+
     });
-  
+
   });
 
 });

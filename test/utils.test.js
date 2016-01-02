@@ -1,9 +1,9 @@
 var should = require('should');
 var PassStream = require('pass-stream');
-var jayson = require(__dirname + '/..');
-var utils = jayson.utils;
+var rj = require(__dirname + '/..');
+var utils = rj.utils;
 
-describe('Jayson.Utils', function() {
+describe('RJ.Utils', function() {
 
   describe('request', function() {
 
@@ -61,7 +61,7 @@ describe('Jayson.Utils', function() {
     });
 
     it('should return the correct names when passed a odd-formatted function', function() {
-      var func = function     (a, b            , __b) { 
+      var func = function     (a, b            , __b) {
         func(2, 3, 55, 4);
         return a + b;
       };
@@ -151,7 +151,7 @@ describe('Jayson.Utils', function() {
 
       stream.end("\"");
     });
-  
+
   });
 
 });

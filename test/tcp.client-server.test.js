@@ -1,20 +1,20 @@
 var should = require('should');
 var _ = require('lodash');
-var jayson = require(__dirname + '/../');
+var rj = require(__dirname + '/../');
 var support = require(__dirname + '/support');
 var common = support.common;
 var net = require('net');
 var url = require('url');
 var JSONStream = require('JSONStream');
 
-describe('Jayson.Tcp', function() {
+describe('RJ.Tcp', function() {
 
   describe('server', function() {
 
     var server = null;
 
     before(function() {
-      server = jayson.server(support.server.methods, support.server.options).tcp();
+      server = rj.server(support.server.methods, support.server.options).tcp();
     });
 
     after(function() {
@@ -69,8 +69,8 @@ describe('Jayson.Tcp', function() {
         });
 
         // write raw requests to the socket
-        socket.write(JSON.stringify(jayson.Utils.request('delay', [20])));
-        socket.write(JSON.stringify(jayson.Utils.request('delay', [5])));
+        socket.write(JSON.stringify(rj.Utils.request('delay', [20])));
+        socket.write(JSON.stringify(rj.Utils.request('delay', [5])));
 
         setTimeout(function() {
           replies.should.have.lengthOf(2);
@@ -79,16 +79,16 @@ describe('Jayson.Tcp', function() {
           done();
         }, 40);
       });
-    
+
     });
 
   });
 
   describe('client', function() {
 
-    var server = jayson.server(support.server.methods, support.server.options);
+    var server = rj.server(support.server.methods, support.server.options);
     var server_tcp = server.tcp();
-    var client = jayson.client.tcp({
+    var client = rj.client.tcp({
       reviver: support.server.options.reviver,
       replacer: support.server.options.replacer,
       host: 'localhost',

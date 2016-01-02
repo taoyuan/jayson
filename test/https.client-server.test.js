@@ -1,6 +1,6 @@
 var should = require('should');
 var fs = require('fs');
-var jayson = require(__dirname + '/..');
+var rj = require(__dirname + '/..');
 var support = require('./support');
 var common = support.common;
 var http = require('http');
@@ -13,7 +13,7 @@ var serverOptions = {
   cert: fs.readFileSync('./test/fixtures/keys/agent1-cert.pem')
 };
 
-describe('Jayson.Https', function() {
+describe('RJ.Https', function() {
 
   describe('server', function() {
 
@@ -24,7 +24,7 @@ describe('Jayson.Https', function() {
     });
 
     it('should listen to a local port', function(done) {
-        server = jayson.server(support.methods, support.options).https(serverOptions);
+        server = rj.server(support.methods, support.options).https(serverOptions);
         server.listen(3000, 'localhost', done);
     });
 
@@ -35,10 +35,10 @@ describe('Jayson.Https', function() {
   });
 
   describe('client', function() {
-    
-    var server = jayson.server(support.server.methods, support.server.options);
+
+    var server = rj.server(support.server.methods, support.server.options);
     var server_https = server.https(serverOptions);
-    var client = jayson.client.https({
+    var client = rj.client.https({
       reviver: support.server.options.reviver,
       replacer: support.server.options.replacer,
       host: 'localhost',
@@ -73,7 +73,7 @@ describe('Jayson.Https', function() {
 
     it('should accept a URL string as the first argument', function() {
       var urlStr = 'https://localhost:3000';
-      var client = jayson.client.https(urlStr);
+      var client = rj.client.https(urlStr);
       var urlObj = url.parse(urlStr);
       Object.keys(urlObj).forEach(function(key) {
         client.options.should.have.property(key, urlObj[key]);

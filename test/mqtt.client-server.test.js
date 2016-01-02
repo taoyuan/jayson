@@ -2,7 +2,7 @@
 
 var should = require('should');
 var _ = require('lodash');
-var jayson = require(__dirname + '/../');
+var rj = require(__dirname + '/../');
 var support = require(__dirname + '/support');
 var common = support.common;
 var net = require('net');
@@ -22,7 +22,7 @@ var coder = {
   }
 };
 
-describe('Jayson.Mqtt', function () {
+describe('RJ.Mqtt', function () {
 
   describe('integration', function () {
 
@@ -32,8 +32,8 @@ describe('Jayson.Mqtt', function () {
     };
 
     var mqttserver = buildMqttServer();
-    var server = jayson.server(support.server.methods, support.server.options).mqtt(mqttserver.url, options);
-    var client = jayson.client.mqtt(mqttserver.url, options);
+    var server = rj.server(support.server.methods, support.server.options).mqtt(mqttserver.url, options);
+    var client = rj.client.mqtt(mqttserver.url, options);
 
     before(function (done) {
       server.ready(function () {

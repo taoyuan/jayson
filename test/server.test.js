@@ -1,11 +1,11 @@
 var should = require('should');
-var jayson = require(__dirname + '/../');
+var rj = require(__dirname + '/../');
 var support = require(__dirname + '/support');
-var utils = jayson.utils;
+var utils = rj.utils;
 
-describe('Jayson.Server', function() {
+describe('RJ.Server', function() {
 
-  var Server = jayson.Server;
+  var Server = rj.Server;
   var ServerErrors = Server.errors;
 
   it('should have an object of errors', function() {
@@ -13,7 +13,7 @@ describe('Jayson.Server', function() {
   });
 
   it('should return an instance without using "new"', function() {
-    Server().should.be.instanceof(jayson.Server);
+    Server().should.be.instanceof(rj.Server);
   });
 
   describe('instance', function() {
@@ -33,7 +33,7 @@ describe('Jayson.Server', function() {
       server.hasMethod('subtract').should.be.false;
     });
 
-    it('should pass options collect and params as defaults to jayson.Method', function() {
+    it('should pass options collect and params as defaults to rj.Method', function() {
       server.options.collect = true;
       server.options.params = Object;
       server.options.scope = Object;
@@ -145,14 +145,14 @@ describe('Jayson.Server', function() {
           done();
         });
       });
-    
+
     });
 
-    describe('jayson.Client router', function() {
+    describe('rj.Client router', function() {
       var client = null;
 
       beforeEach(function() {
-        client = jayson.client(server, support.server.options);
+        client = rj.client(server, support.server.options);
         server.options.router = function(method) {
           return client;
         };
@@ -280,7 +280,7 @@ describe('Jayson.Server', function() {
           err.should.containDeep({error: {code: ServerErrors.METHOD_NOT_FOUND}});
           done();
         });
-      }); 
+      });
 
     });
 
@@ -447,7 +447,7 @@ describe('Jayson.Server', function() {
           });
 
         });
-      
+
       });
 
       it('should handle an empty batch', function(done) {
@@ -508,7 +508,7 @@ describe('Jayson.Server', function() {
 
       it('should be able return method invocations in correct order', function(done) {
 
-        var request = [ 
+        var request = [
           utils.request('add_slow', [1, 1, true]),
           utils.request('add_slow', [1, 2, false])
         ];
@@ -520,7 +520,7 @@ describe('Jayson.Server', function() {
           responses[1].should.have.property('result', 1 + 2);
           done();
         });
-      
+
       });
 
     });
