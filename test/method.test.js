@@ -2,80 +2,82 @@ var should = require('should');
 var rj = require(__dirname + '/../');
 var support = require(__dirname + '/support');
 
-describe('RJ.Method', function() {
+describe('RJ.Method', function () {
 
   var Method = rj.Method;
 
-  it('should return an instance when called as a function', function() {
-    Method(function() {}).should.be.instanceof(Method);
+  it('should return an instance when called as a function', function () {
+    Method(function () {
+    }).should.be.instanceof(Method);
   });
 
-  describe('instance', function() {
+  describe('instance', function () {
 
     var method = null;
 
-    beforeEach(function() {
+    beforeEach(function () {
       method = new Method();
     });
 
-    describe('getHandler and setHandler', function() {
+    describe('getHandler and setHandler', function () {
 
-      var fn = function() {};
+      var fn = function () {
+      };
 
-      it('should accept the "handler" argument in the options object in the constructor', function() {
+      it('should accept the "handler" argument in the options object in the constructor', function () {
         method = new Method({handler: fn});
         method.getHandler().should.equal(fn);
       });
 
-      it('should return the handler with get if set', function() {
+      it('should return the handler with get if set', function () {
         method.setHandler(fn);
         method.getHandler().should.equal(fn);
       });
 
-      it('should return the handler function when given in constructor', function() {
+      it('should return the handler function when given in constructor', function () {
         var method = new Method(fn);
         method.getHandler().should.equal(fn);
       });
 
     });
 
-    describe('execute', function() {
+    describe('execute', function () {
 
       var server = null;
 
-      beforeEach(function() {
+      beforeEach(function () {
         server = new rj.Server();
       });
 
-      describe('options.collect true', function() {
+      describe('options.collect true', function () {
 
-        describe('options.params Array', function() {
+        describe('options.params Array', function () {
 
-          var add = function(args, callback) {
+          var add = function (args, callback) {
             args.should.be.instanceof(Array);
-            callback(null, args.reduce(function(sum, value) {
+            callback(null, args.reduce(function (sum, value) {
               return sum + value;
             }, 0));
           };
 
-          beforeEach(function() {
+          beforeEach(function () {
             method = new Method(add, {
               collect: true,
               params: Array
             });
           });
 
-          it('should pass named params as an array', function(done) {
-            method.execute(server, {a: 1, b: 2, c: 3}, function(err, sum) {
-              if(err) throw err;
+          it('should pass named params as an array', function (done) {
+            method.execute(server, {a: 1, b: 2, c: 3}, function (err, sum) {
+              if (err) throw err;
               sum.should.eql(1 + 2 + 3);
               done();
             });
           });
 
-          it('should pass array params as given', function(done) {
-            method.execute(server, [1, 2, 3, 4], function(err, sum) {
-              if(err) throw err;
+          it('should pass array params as given', function (done) {
+            method.execute(server, [1, 2, 3, 4], function (err, sum) {
+              if (err) throw err;
               sum.should.eql(1 + 2 + 3 + 4);
               done();
             });
@@ -83,14 +85,14 @@ describe('RJ.Method', function() {
 
         });
 
-        describe('options.params Object', function() {
+        describe('options.params Object', function () {
 
-          var add = function(args, callback) {
+          var add = function (args, callback) {
             args.should.be.instanceof(Object);
             args.should.not.be.instanceof(Array);
 
             var sum = 0;
-            for(var name in args) {
+            for (var name in args) {
               sum += args[name];
             }
 
@@ -98,24 +100,24 @@ describe('RJ.Method', function() {
 
           };
 
-          beforeEach(function() {
+          beforeEach(function () {
             method = new Method(add, {
               collect: true,
               params: Object
             });
           });
 
-          it('should pass a param object as given', function(done) {
-            method.execute(server, {a: 1, b: 2, c: 3}, function(err, sum) {
-              if(err) throw err;
+          it('should pass a param object as given', function (done) {
+            method.execute(server, {a: 1, b: 2, c: 3}, function (err, sum) {
+              if (err) throw err;
               sum.should.eql(1 + 2 + 3);
               done();
             });
           });
 
-          it('should cast an array to an object', function(done) {
-            method.execute(server, [1, 2, 3, 4], function(err, sum) {
-              if(err) throw err;
+          it('should cast an array to an object', function (done) {
+            method.execute(server, [1, 2, 3, 4], function (err, sum) {
+              if (err) throw err;
               sum.should.eql(1 + 2 + 3 + 4);
               done();
             });
@@ -123,9 +125,9 @@ describe('RJ.Method', function() {
 
         });
 
-        describe('options.params list of params', function() {
+        describe('options.params list of params', function () {
 
-          var add = function(args, callback) {
+          var add = function (args, callback) {
             args.should.be.instanceof(Object);
             args.should.not.be.instanceof(Array);
 
@@ -137,24 +139,24 @@ describe('RJ.Method', function() {
             callback(null, sum);
           };
 
-          beforeEach(function() { 
+          beforeEach(function () {
             method = new Method(add, {
               collect: true,
               params: ['a', 'b', 'c']
             });
           });
 
-          it('should replace left-out params with undefined', function(done) {
-            method.execute(server, {a: 1}, function(err, sum) {
-              if(err) throw err;
+          it('should replace left-out params with undefined', function (done) {
+            method.execute(server, {a: 1}, function (err, sum) {
+              if (err) throw err;
               sum.should.eql(1);
               done();
             });
           });
 
-          it('should leave all params as undefined when given an array', function(done) {
-            method.execute(server, [1,2,3], function(err, sum) {
-              if(err) throw err;
+          it('should leave all params as undefined when given an array', function (done) {
+            method.execute(server, [1, 2, 3], function (err, sum) {
+              if (err) throw err;
               sum.should.eql(0);
               done();
             });
@@ -162,9 +164,9 @@ describe('RJ.Method', function() {
 
         });
 
-        describe('options.params map of default values', function() {
+        describe('options.params map of default values', function () {
 
-          var add = function(args, callback) {
+          var add = function (args, callback) {
             args.should.be.instanceof(Object);
             args.should.not.be.instanceof(Array);
 
@@ -176,24 +178,24 @@ describe('RJ.Method', function() {
             callback(null, sum);
           };
 
-          beforeEach(function() {
+          beforeEach(function () {
             method = new Method(add, {
               collect: true,
               params: {a: 0, b: 0, c: 0}
             });
           });
 
-          it('should fill in missing properties with named param values as defaults', function(done) {
-            method.execute(server, {a: 5}, function(err, sum) {
-              if(err) throw err;
+          it('should fill in missing properties with named param values as defaults', function (done) {
+            method.execute(server, {a: 5}, function (err, sum) {
+              if (err) throw err;
               sum.should.eql(5);
               done();
             });
           });
 
-          it('should fill in defaults when given an array', function(done) {
-            method.execute(server, [1,2,3], function(err, sum) {
-              if(err) throw err;
+          it('should fill in defaults when given an array', function (done) {
+            method.execute(server, [1, 2, 3], function (err, sum) {
+              if (err) throw err;
               sum.should.eql(0);
               done();
             });
@@ -201,14 +203,14 @@ describe('RJ.Method', function() {
 
         });
 
-        describe('options.params undefined', function() {
+        describe('options.params undefined', function () {
 
-          var add = function(args, callback) {
+          var add = function (args, callback) {
 
-            if(args instanceof Array) {
+            if (args instanceof Array) {
 
               // given Array
-              return callback(null, args.reduce(function(sum, value) {
+              return callback(null, args.reduce(function (sum, value) {
                 return sum + value;
               }, 0));
 
@@ -216,7 +218,7 @@ describe('RJ.Method', function() {
 
               // given Object
               var sum = 0;
-              for(var name in args) {
+              for (var name in args) {
                 sum += args[name];
               }
 
@@ -225,18 +227,18 @@ describe('RJ.Method', function() {
 
           };
 
-          it('should pass an array when given an array', function(done) {
-            var fn = function(args, callback) {
+          it('should pass an array when given an array', function (done) {
+            var fn = function (args, callback) {
               args.should.be.instanceof(Array);
               callback();
             };
 
             method = new Method(fn, {collect: true});
-            method.execute(server, [1,2,3], done);
+            method.execute(server, [1, 2, 3], done);
           });
 
-          it('should pass an object when given an object', function(done) {
-            var fn = function(args, callback) {
+          it('should pass an object when given an object', function (done) {
+            var fn = function (args, callback) {
               args.should.not.be.instanceof(Array);
               args.should.be.instanceof(Object);
               callback();
@@ -250,36 +252,36 @@ describe('RJ.Method', function() {
 
       });
 
-      describe('options.collect false', function() {
+      describe('options.collect false', function () {
 
-        var add = function(a, b, callback) {
+        var add = function (a, b, callback) {
           return callback(null, a + b);
         };
 
-        beforeEach(function() {
+        beforeEach(function () {
           method = new Method(add, {
             collect: false
           });
         });
 
-        it('should pass array params in order and callback last', function(done) {
-          method.execute(server, [1,2], function(err, sum) {
-            if(err) throw err;
+        it('should pass array params in order and callback last', function (done) {
+          method.execute(server, [1, 2], function (err, sum) {
+            if (err) throw err;
             sum.should.eql(1 + 2);
             done();
           });
         });
 
-        it('should attempt to fill in named params', function(done) {
-          method.execute(server, {a: 1, b: 2}, function(err, sum) {
-            if(err) throw err;
+        it('should attempt to fill in named params', function (done) {
+          method.execute(server, {a: 1, b: 2}, function (err, sum) {
+            if (err) throw err;
             sum.should.eql(1 + 2);
             done();
           });
         });
 
-        it('should give an INVALID_PARAMS error for wrong number of args passed', function(done) {
-          method.execute(server, [1], function(err, sum) {
+        it('should give an INVALID_PARAMS error for wrong number of args passed', function (done) {
+          method.execute(server, [1], function (err, sum) {
             err.should.containDeep({code: rj.Server.errors.INVALID_PARAMS});
             should(sum).not.be.ok;
             done();
@@ -288,25 +290,25 @@ describe('RJ.Method', function() {
 
       });
 
-      describe('options.scope provided', function() {
+      describe('options.scope provided', function () {
 
         var scope = {
           message: 'Hello, '
         };
 
-        var fn = function(name, callback) {
+        var fn = function (name, callback) {
           callback(null, this.message + name);
         };
 
-        beforeEach(function() {
+        beforeEach(function () {
           method = new Method(fn, {
             scope: scope
           });
         });
 
-        it('should call with scope', function(done) {
-          method.execute(server, {name: 'RJ'}, function(err, result) {
-            if(err) throw err;
+        it('should call with scope', function (done) {
+          method.execute(server, {name: 'RJ'}, function (err, result) {
+            if (err) throw err;
             result.should.eql('Hello, RJ');
             done();
           });

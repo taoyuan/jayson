@@ -7,50 +7,50 @@ var net = require('net');
 var url = require('url');
 var JSONStream = require('JSONStream');
 
-describe('RJ.Tcp', function() {
+describe('RJ.Tcp', function () {
 
-  describe('server', function() {
+  describe('server', function () {
 
     var server = null;
 
-    before(function() {
+    before(function () {
       server = rj.server(support.server.methods, support.server.options).tcp();
     });
 
-    after(function() {
+    after(function () {
       server.close();
     });
 
-    it('should listen to a local port', function(done) {
+    it('should listen to a local port', function (done) {
       server.listen(3000, 'localhost', done);
     });
 
-    it('should be an instance of net.Server', function() {
+    it('should be an instance of net.Server', function () {
       server.should.be.instanceof(net.Server);
     });
 
-    context('connected socket', function() {
+    context('connected socket', function () {
 
       var socket = null;
       var responses = null;
 
-      beforeEach(function(done) {
+      beforeEach(function (done) {
         server.listen(3000, 'localhost', done);
       });
 
-      beforeEach(function(done) {
+      beforeEach(function (done) {
         socket = net.connect(3000, 'localhost', done);
         responses = JSONStream.parse();
         socket.pipe(responses);
       });
 
-      afterEach(function(done) {
+      afterEach(function (done) {
         socket.end();
         done();
       });
 
-      it('should send a parse error for invalid JSON data', function(done) {
-        responses.on('data', function(data) {
+      it('should send a parse error for invalid JSON data', function (done) {
+        responses.on('data', function (data) {
           data.should.containDeep({
             id: null,
             error: {code: -32700} // Parse Error
@@ -62,9 +62,9 @@ describe('RJ.Tcp', function() {
         socket.end('abc');
       });
 
-      it('should send more than one reply on the same socket', function(done) {
+      it('should send more than one reply on the same socket', function (done) {
         var replies = [];
-        responses.on('data', function(data) {
+        responses.on('data', function (data) {
           replies.push(data);
         });
 
@@ -72,7 +72,7 @@ describe('RJ.Tcp', function() {
         socket.write(JSON.stringify(rj.Utils.request('delay', [20])));
         socket.write(JSON.stringify(rj.Utils.request('delay', [5])));
 
-        setTimeout(function() {
+        setTimeout(function () {
           replies.should.have.lengthOf(2);
           replies[0].should.have.property('result', 5);
           replies[1].should.have.property('result', 20);
@@ -84,7 +84,7 @@ describe('RJ.Tcp', function() {
 
   });
 
-  describe('client', function() {
+  describe('client', function () {
 
     var server = rj.server(support.server.methods, support.server.options);
     var server_tcp = server.tcp();
@@ -95,11 +95,11 @@ describe('RJ.Tcp', function() {
       port: 3000
     });
 
-    before(function(done) {
+    before(function (done) {
       server_tcp.listen(3000, 'localhost', done);
     });
 
-    after(function() {
+    after(function () {
       server_tcp.close();
     });
 

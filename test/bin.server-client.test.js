@@ -6,11 +6,12 @@ var fs = require('fs');
 var url = require('url');
 var bin = __dirname + '/../bin/rj.js';
 
-describe('RJ.Bin', function() {
+describe('RJ.Bin', function () {
 
-  var server = rj.server(support.server.methods, support.server.options);;
+  var server = rj.server(support.server.methods, support.server.options);
+  ;
 
-  describe('port-listening http server', function() {
+  describe('port-listening http server', function () {
 
     var http = null;
     var hostname = 'localhost';
@@ -21,17 +22,17 @@ describe('RJ.Bin', function() {
       hostname: hostname
     });
 
-    before(function(done) {
+    before(function (done) {
       http = server.http();
       http.listen(port, hostname, done);
     });
 
-    after(function(done) {
+    after(function (done) {
       http.on('close', done);
       http.close();
     });
 
-    it('should be callable', function(done) {
+    it('should be callable', function (done) {
 
       var args = get_args(bin, {
         url: surl,
@@ -41,8 +42,8 @@ describe('RJ.Bin', function() {
         params: JSON.stringify([4, 9])
       });
 
-      exec(args, function(err, stdout, stderr) {
-        if(err) throw err;
+      exec(args, function (err, stdout, stderr) {
+        if (err) throw err;
 
         should.exist(stdout, stderr);
         stderr.should.equal('');
@@ -58,24 +59,24 @@ describe('RJ.Bin', function() {
 
   });
 
-  describe('port-listening tcp server', function() {
+  describe('port-listening tcp server', function () {
 
     var tcp = null;
     var hostname = 'localhost';
     var port = "35000";
     var socket = hostname + ":" + port;
 
-    before(function(done) {
+    before(function (done) {
       tcp = server.tcp();
       tcp.listen(port, hostname, done);
     });
 
-    after(function(done) {
+    after(function (done) {
       tcp.on('close', done);
       tcp.close();
     });
 
-    it('should be callable', function(done) {
+    it('should be callable', function (done) {
 
       var args = get_args(bin, {
         socket: socket,
@@ -85,8 +86,8 @@ describe('RJ.Bin', function() {
         params: JSON.stringify([1, 2])
       });
 
-      exec(args, function(err, stdout, stderr) {
-        if(err) throw err;
+      exec(args, function (err, stdout, stderr) {
+        if (err) throw err;
         var json = JSON.parse(stdout);
         stderr.should.equal('');
 
@@ -100,26 +101,26 @@ describe('RJ.Bin', function() {
 
   });
 
-  describe('unix domain socket-listening server', function() {
+  describe('unix domain socket-listening server', function () {
 
     var http = null;
     var socketPath = __dirname + '/support/bin.test.socket';
 
-    before(function(done) {
+    before(function (done) {
       try {
         fs.unlinkSync(socketPath);
-      } catch(ignore) {
+      } catch (ignore) {
       }
       http = server.http();
       http.listen(socketPath, done);
     });
 
-    after(function(done) {
+    after(function (done) {
       http.on('close', done);
       http.close();
     });
 
-    it('should be callable', function(done) {
+    it('should be callable', function (done) {
 
       var args = get_args(bin, {
         socket: socketPath,
@@ -129,8 +130,8 @@ describe('RJ.Bin', function() {
         params: JSON.stringify([1, 2])
       });
 
-      exec(args, function(err, stdout, stderr) {
-        if(err) throw err;
+      exec(args, function (err, stdout, stderr) {
+        if (err) throw err;
         var json = JSON.parse(stdout);
         stderr.should.equal('');
 
@@ -148,10 +149,10 @@ describe('RJ.Bin', function() {
 
 function get_args(binary, args) {
   var buf = binary;
-  for(var arg in args) {
+  for (var arg in args) {
     var value = args[arg];
     buf += ' --' + arg;
-    if(typeof(value) === 'string') {
+    if (typeof(value) === 'string') {
       buf += ' "' + value + '"';
     }
   }

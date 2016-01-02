@@ -8,9 +8,9 @@ var Counter = support.Counter;
  * @param {Client} Client instance to use
  * @return {Function}
  */
-var common = module.exports = function(client) {
+var common = module.exports = function (client) {
 
-  return function() {
+  return function () {
 
     it('should be an instance of rj.client', common.clientInstance(client));
 
@@ -27,17 +27,17 @@ var common = module.exports = function(client) {
   };
 };
 
-common.clientInstance = function(client) {
-  return function() {
+common.clientInstance = function (client) {
+  return function () {
     client.should.be.instanceof(rj.client);
   };
 };
 
-common.clientRequest = function(client) {
-  return function(done) {
+common.clientRequest = function (client) {
+  return function (done) {
     var a = 11, b = 12;
-    client.request('add', [a, b], function(err, error, result) {
-      if(err || error) return done(err || error);
+    client.request('add', [a, b], function (err, error, result) {
+      if (err || error) return done(err || error);
       should.exist(result);
       result.should.equal(a + b);
       done();
@@ -45,9 +45,9 @@ common.clientRequest = function(client) {
   };
 };
 
-common.clientError = function(client) {
-  return function(done) {
-    client.request('error', [], function(err, error, result) {
+common.clientError = function (client) {
+  return function (done) {
+    client.request('error', [], function (err, error, result) {
       should.not.exist(err);
       should.not.exist(result);
       should.exist(error);
@@ -58,11 +58,11 @@ common.clientError = function(client) {
   };
 };
 
-common.clientReviveReplace = function(client) {
-  return function(done) {
+common.clientReviveReplace = function (client) {
+  return function (done) {
     var a = 2, b = 1;
     var instance = new Counter(a);
-    client.request('incrementCounterBy', [instance, b], function(err, error, result) {
+    client.request('incrementCounterBy', [instance, b], function (err, error, result) {
       should.not.exist(err);
       should.not.exist(error);
       should.exist(result);
@@ -73,23 +73,23 @@ common.clientReviveReplace = function(client) {
   };
 };
 
-common.clientNotification = function(client) {
-  return function(done) {
-    client.request('add', [3, 4], null, function(err) {
-      if(err) throw err;
+common.clientNotification = function (client) {
+  return function (done) {
+    client.request('add', [3, 4], null, function (err) {
+      if (err) throw err;
       arguments.length.should.equal(0);
       done();
     });
   };
 };
 
-common.clientBatch = function(client) {
-  return function(done) {
+common.clientBatch = function (client) {
+  return function (done) {
     var batch = [
       client.request('add', [4, 9]),
       client.request('add', [10, 22])
     ];
-    client.request(batch, function(err, responses) {
+    client.request(batch, function (err, responses) {
       should.not.exist(err);
       should.exist(responses);
       responses.should.be.instanceof(Array).and.have.length(2);

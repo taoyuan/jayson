@@ -3,18 +3,18 @@ var rj = require(__dirname + '/..');
 var support = require('./support');
 var common = support.common;
 
-describe('RJ.Relay', function() {
+describe('RJ.Relay', function () {
 
-  describe('server', function() {
+  describe('server', function () {
 
-    it('should be created with a client as a method', function() {
+    it('should be created with a client as a method', function () {
       var server = rj.server(support.methods, support.server.options);
       rj.server({add: rj.client(server)}, support.server.options);
     });
 
   });
 
-  describe('client', function() {
+  describe('client', function () {
 
     var options = support.server.options;
 
@@ -24,7 +24,7 @@ describe('RJ.Relay', function() {
     var front_client = rj.client(front_server, options);
 
     // replace all methods in front server with the client
-    Object.keys(back_server._methods).forEach(function(name) {
+    Object.keys(back_server._methods).forEach(function (name) {
       front_server.method(name, relay_client);
     });
 

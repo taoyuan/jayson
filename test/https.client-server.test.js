@@ -13,28 +13,28 @@ var serverOptions = {
   cert: fs.readFileSync('./test/fixtures/keys/agent1-cert.pem')
 };
 
-describe('RJ.Https', function() {
+describe('RJ.Https', function () {
 
-  describe('server', function() {
+  describe('server', function () {
 
     var server = null;
 
-    after(function() {
+    after(function () {
       server.close();
     });
 
-    it('should listen to a local port', function(done) {
-        server = rj.server(support.methods, support.options).https(serverOptions);
-        server.listen(3000, 'localhost', done);
+    it('should listen to a local port', function (done) {
+      server = rj.server(support.methods, support.options).https(serverOptions);
+      server.listen(3000, 'localhost', done);
     });
 
-    it('should be an instance of https.Server', function() {
+    it('should be an instance of https.Server', function () {
       server.should.be.instanceof(https.Server);
     });
 
   });
 
-  describe('client', function() {
+  describe('client', function () {
 
     var server = rj.server(support.server.methods, support.server.options);
     var server_https = server.https(serverOptions);
@@ -46,36 +46,36 @@ describe('RJ.Https', function() {
       ca: serverOptions.ca
     });
 
-    before(function(done) {
+    before(function (done) {
       server_https.listen(3000, 'localhost', done);
     });
 
-    after(function() {
+    after(function () {
       server_https.close();
     });
 
     describe('common tests', common(client));
 
-    it('should emit an event with the http response', function(done) {
+    it('should emit an event with the http response', function (done) {
       var hasFired = false;
 
-      client.on('http response', function(res) {
+      client.on('http response', function (res) {
         res.should.be.instanceof(http.IncomingMessage);
         hasFired = true;
       });
 
-      client.request('add', [9, 4], function(err, response) {
-        if(err) throw err;
+      client.request('add', [9, 4], function (err, response) {
+        if (err) throw err;
         hasFired.should.be.ok;
         done();
       });
     });
 
-    it('should accept a URL string as the first argument', function() {
+    it('should accept a URL string as the first argument', function () {
       var urlStr = 'https://localhost:3000';
       var client = rj.client.https(urlStr);
       var urlObj = url.parse(urlStr);
-      Object.keys(urlObj).forEach(function(key) {
+      Object.keys(urlObj).forEach(function (key) {
         client.options.should.have.property(key, urlObj[key]);
       });
     });

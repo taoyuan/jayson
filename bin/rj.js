@@ -13,14 +13,14 @@ var net = require('net')
 
 // initialize program and define arguments
 program.version(pkg.version)
-       .option('-m, --method [name]', 'Method', String)
-       .option('-p, --params [json]', 'Array or Object to use as parameters', JSON.parse)
-       .option('-u, --url [url]', 'URL to server', url.parse)
-       .option('-q, --quiet', 'Only output the response value and any errors', Boolean)
-       .option('-s, --socket [path] or [ip:port]', 'Path to UNIX socket, or TCP socket address', parseSocket)
-       .option('-j, --json', 'Only output the response value as JSON (implies --quiet)', Boolean)
-       .option('-c, --color', 'Color output', Boolean)
-       .parse(process.argv);
+  .option('-m, --method [name]', 'Method', String)
+  .option('-p, --params [json]', 'Array or Object to use as parameters', JSON.parse)
+  .option('-u, --url [url]', 'URL to server', url.parse)
+  .option('-q, --quiet', 'Only output the response value and any errors', Boolean)
+  .option('-s, --socket [path] or [ip:port]', 'Path to UNIX socket, or TCP socket address', parseSocket)
+  .option('-j, --json', 'Only output the response value as JSON (implies --quiet)', Boolean)
+  .option('-c, --color', 'Color output', Boolean)
+  .parse(process.argv);
 
 var inspect = eyes.inspector({
   stream: null,
@@ -28,16 +28,16 @@ var inspect = eyes.inspector({
 });
 
 // quiet is implied if json is specified
-if(program.json) program.quiet = true;
+if (program.json) program.quiet = true;
 
 // wrapper for printing different kinds of output
 var std = {
-  out: getPrinter({ fn: console.log }),
-  err: getPrinter({ fn: console.error })
+  out: getPrinter({fn: console.log}),
+  err: getPrinter({fn: console.error})
 };
 
 // do we have all arguments required to do something?
-if(!(program.method && (program.url || program.socket))) {
+if (!(program.method && (program.url || program.socket))) {
   std.err.result(program.helpInformation());
   return process.exit(-1);
 }
@@ -52,13 +52,13 @@ std.out.noise(
   Array.isArray(program.params) ? program.params.join(', ') : JSON.stringify(program.params)
 );
 
-client.request(program.method, program.params, function(err, response) {
-  if(err) {
+client.request(program.method, program.params, function (err, response) {
+  if (err) {
     std.err.noise(colorize('red', '<- %s'), err.stack);
     return process.exit(-1);
   }
 
-  if(!response || program.json) {
+  if (!response || program.json) {
     std.out.result('%s', JSON.stringify(response).replace("\n", ""));
     return process.exit(0);
   }
@@ -79,8 +79,8 @@ function parseSocket(value) {
 
 function colorize(color, format) {
   return program.color
-       ? eyes.stylize(format, color, {})
-       : format;
+    ? eyes.stylize(format, color, {})
+    : format;
 }
 
 function getPrinter(options) {
@@ -90,13 +90,13 @@ function getPrinter(options) {
   return {
 
     // print noise (printed if program is not quiet)
-    noise: function() {
-      if(program.quiet) return;
+    noise: function () {
+      if (program.quiet) return;
       return fn.apply(console, arguments);
     },
 
     // print results (always printed)
-    result: function() {
+    result: function () {
       return fn.apply(console, arguments);
     }
 
