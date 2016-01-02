@@ -26,7 +26,10 @@
     "Yuan Tao <towyuan@outlook.com>",
     "Tedde Lundgren <mail@tedeh.net> (http://tedeh.net)"
   ],
-  "maintainers": "Tedde Lundgren <mail@tedeh.net> (http://tedeh.net)",
+  "maintainers": [
+    "Yuan Tao <towyuan@outlook.com>",
+    "Tedde Lundgren <mail@tedeh.net> (http://tedeh.net)"
+  ],
   "bin": "./bin/rj.js",
   "repository": {
     "type": "git",
