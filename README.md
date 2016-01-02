@@ -826,8 +826,8 @@ server.http().listen(3000);
 
 ### Contributing
 
-Highlighting [issues](https://github.com/tedeh/rj/issues) or submitting pull
-requests on [Github](https://github.com/tedeh/rj) is most welcome.
+Highlighting [issues](https://github.com/taoyuan/rj/issues) or submitting pull
+requests on [Github](https://github.com/taoyuan/rj) is most welcome.
 
 [jsonrpc-spec]: http://jsonrpc.org/spec.html 
 [jsonrpc1-spec]: http://json-rpc.org/wiki/specification
