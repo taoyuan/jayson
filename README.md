@@ -2,8 +2,6 @@
 
 RemJson is a [JSON-RPC 2.0][jsonrpc-spec] compliant server and client written in JavaScript for [node.js][node.js] that aims to be as simple as possible to use.
 
-Forked from [jayson](https://github.com/tedeh/jayson)
-
 **Build status:** [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
 
 ## Table of contents

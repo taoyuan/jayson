@@ -62,7 +62,7 @@ describe('RemJson.Mqtt', function () {
         });
       });
 
-      it.only('should callback with timeout error when request is timeout', function (done) {
+      it('should callback with timeout error when request is timeout', function (done) {
         var a = 11, b = 12;
         client.request('add', [a, b], {timeout: 1}, function (err, error, result) {
           should.exist(err);
