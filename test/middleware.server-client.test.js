@@ -3,10 +3,11 @@ var support = require('./support');
 var common = support.common;
 var remjson = require(__dirname + '/..');
 var connect = require('connect');
+var bodyParser = require('body-parser');
 
 describe('RemJson.Middleware', function () {
 
-  var app = connect.createServer();
+  var app = connect();
   var server = null; // set in before()
   var client = remjson.client.http({
     reviver: support.server.options.reviver,
@@ -16,7 +17,7 @@ describe('RemJson.Middleware', function () {
   });
 
   before(function (done) {
-    app.use(connect.json({reviver: support.server.options.reviver}));
+    app.use(bodyParser.json({reviver: support.server.options.reviver}));
     app.use(remjson.server(support.server.methods, support.server.options).middleware());
     server = app.listen(3000, done);
   });

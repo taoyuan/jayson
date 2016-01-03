@@ -9,7 +9,6 @@ var bin = __dirname + '/../bin/remjson.js';
 describe('RemJson.Bin', function () {
 
   var server = remjson.server(support.server.methods, support.server.options);
-  ;
 
   describe('port-listening http server', function () {
 
@@ -48,6 +47,7 @@ describe('RemJson.Bin', function () {
         should.exist(stdout, stderr);
         stderr.should.equal('');
 
+        console.log(stdout);
         var json = JSON.parse(stdout);
         json.should.containDeep({
           result: 4 + 9

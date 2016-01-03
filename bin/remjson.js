@@ -16,10 +16,10 @@ program.version(pkg.version)
   .option('-m, --method [name]', 'Method', String)
   .option('-p, --params [json]', 'Array or Object to use as parameters', JSON.parse)
   .option('-u, --url [url]', 'URL to server', url.parse)
-  .option('-q, --quiet', 'Only output the response value and any errors', Boolean)
+  .option('-q, --quiet', 'Only output the response value and any errors')
   .option('-s, --socket [path] or [ip:port]', 'Path to UNIX socket, or TCP socket address', parseSocket)
-  .option('-j, --json', 'Only output the response value as JSON (implies --quiet)', Boolean)
-  .option('-c, --color', 'Color output', Boolean)
+  .option('-j, --json', 'Only output the response value as JSON (implies --quiet)')
+  .option('-c, --color', 'Color output')
   .parse(process.argv);
 
 var inspect = eyes.inspector({
