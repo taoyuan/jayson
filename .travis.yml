@@ -1,10 +1,6 @@
-# Language/versions
 language: node_js
 node_js:
-  - "v5"
-  - "v4"
-  - "iojs"
-  - "0.12"
-
-# Build script
-script: 'npm test'
+  - v5
+  - v4
+  - '0.12'
+  - '0.10'
