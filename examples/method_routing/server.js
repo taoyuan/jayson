@@ -1,4 +1,4 @@
-var jayson = require(__dirname + '/../..');
+var remjson = require(__dirname + '/../..');
 var format = require('util').format;
 
 var methods = {
@@ -7,13 +7,13 @@ var methods = {
   }
 };
 
-var server = jayson.server(methods, {
+var server = remjson.server(methods, {
   router: function(method) {
     // regular by-name routing first
     if(typeof(this._methods[method]) === 'function') return this._methods[method];
     if(method === 'add_2') {
       var fn = server.getMethod('add').getHandler();
-      return jayson.Method(fn.bind(null, 2));
+      return remjson.Method(fn.bind(null, 2));
     }
   }
 });

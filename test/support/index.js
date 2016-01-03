@@ -104,5 +104,5 @@ exports.buildMqttServer = function buildMqttServer(options, cb) {
   server.url = 'mqtt://localhost:' + options.port;
   server.port = options.port;
   return server;
-}
+};
 

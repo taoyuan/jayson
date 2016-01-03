@@ -1,8 +1,8 @@
-var jayson = require(__dirname + '/../..');
+var remjson = require(__dirname + '/../..');
 
 // create a server where "add" will relay a localhost-only server
-var server = jayson.server({
-  add: jayson.client.http({
+var server = remjson.server({
+  add: remjson.client.http({
     hostname: 'localhost',
     port: 3001
   })

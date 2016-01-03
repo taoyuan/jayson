@@ -1,10 +1,10 @@
-var jayson = require(__dirname + '/../..');
+var remjson = require(__dirname + '/../..');
 var _ = require('lodash');
 
 var methods = {
 
   // this method gets the raw params as first arg to handler
-  addCollect: new jayson.Method({
+  addCollect: new remjson.Method({
     handler: function(args, done) {
       var total = sum(args);
       done(null, total);
@@ -13,7 +13,7 @@ var methods = {
   }),
 
   // specifies some default values (alternate definition too)
-  addDefault: jayson.Method(function(args, done) {
+  addDefault: remjson.Method(function(args, done) {
     var total = sum(args);
     done(null, total);
   }, {
@@ -22,7 +22,7 @@ var methods = {
   }),
 
   // this method returns true when it gets an array (which it always does)
-  acceptArray: new jayson.Method({
+  acceptArray: new remjson.Method({
     handler: function(args, done) {
       var result = _.isArray(args);
       done(null, result);
@@ -33,7 +33,7 @@ var methods = {
 
 };
 
-var server = jayson.server(methods);
+var server = remjson.server(methods);
 
 server.http().listen(3000);
 

@@ -1,6 +1,6 @@
-var jayson = require(__dirname + '/../..');
+var remjson = require(__dirname + '/../..');
 
-var server = jayson.server({
+var server = remjson.server({
   add: function(a, b, callback) {
     return callback(null, a + b);
   }

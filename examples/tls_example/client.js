@@ -1,4 +1,4 @@
-var jayson = require(__dirname + '/../..');
+var remjson = require(__dirname + '/../..');
 var fs = require('fs')
 var path = require('path')
 
@@ -15,7 +15,7 @@ var options = {
 };
 
 // create a client
-var client = jayson.client.tls(options);
+var client = remjson.client.tls(options);
 
 // invoke "add"
 client.request('add', [1, 1], function(err, error, response) {

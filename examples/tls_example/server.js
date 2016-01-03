@@ -1,4 +1,4 @@
-var jayson = require(__dirname + '/../..');
+var remjson = require(__dirname + '/../..');
 var fs = require('fs');
 var path = require('path');
 
@@ -13,7 +13,7 @@ var options = {
 };
 
 // create a server
-var server = jayson.server({
+var server = remjson.server({
   add: function(a, b, callback) {
     callback(null, a + b);
   }

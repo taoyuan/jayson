@@ -1,4 +1,4 @@
-var jayson = require(__dirname + '/../..');
+var remjson = require(__dirname + '/../..');
 var shared = require('./shared');
 
 // Set the reviver/replacer options
@@ -8,7 +8,7 @@ var options = {
 };
 
 // create a server
-var server = jayson.server({
+var server = remjson.server({
   increment: function(counter, callback) {
     counter.increment();
     callback(null, counter);

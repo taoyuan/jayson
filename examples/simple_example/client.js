@@ -1,7 +1,7 @@
-var jayson = require(__dirname + '/../..');
+var remjson = require(__dirname + '/../..');
 
 // create a client
-var client = jayson.client.http({
+var client = remjson.client.http({
   port: 3000,
   hostname: 'localhost'
 });

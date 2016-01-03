@@ -1,8 +1,8 @@
-var jayson = require(__dirname + '/../..');
+var remjson = require(__dirname + '/../..');
 var shared = require('./shared');
 
 // create a client with the shared reviver and replacer
-var client = jayson.client.http({
+var client = remjson.client.http({
   port: 3000,
   hostname: 'localhost',
   reviver: shared.reviver,
