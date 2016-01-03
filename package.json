@@ -47,7 +47,8 @@
     "Jonathan Liu <net147@gmail.com>"
   ],
   "scripts": {
-    "test": "make test"
+    "prepublish": "gulp prepublish",
+    "test": "gulp"
   },
   "config": {
     "blanket": {
@@ -69,14 +70,19 @@
     "mqttr": "^1.1.2"
   },
   "devDependencies": {
-    "blanket": "1.2.1",
     "body-parser": "^1.14.2",
     "connect": "3.4.0",
+    "gulp": "^3.9.0",
+    "gulp-coveralls": "^0.1.4",
+    "gulp-exclude-gitignore": "^1.0.0",
+    "gulp-istanbul": "^0.10.3",
+    "gulp-mocha": "^2.2.0",
+    "gulp-nsp": "^2.2.1",
+    "gulp-plumber": "^1.0.1",
     "mocha": "2.3.4",
     "mosca": "github:taoyuan/mosca",
     "pass-stream": "0.1.3",
-    "should": "8.0.2",
-    "uglify-js": "2.6.1"
+    "should": "8.0.2"
   },
   "optionalDependencies": {
     "logs": "^1.0.0"
