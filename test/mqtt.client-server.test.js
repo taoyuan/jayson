@@ -57,7 +57,80 @@ describe('RemJson.Mqtt', function () {
         });
       });
     });
+  });
 
+  describe('client', function () {
+    var mqttserver;
+
+    before(function (done) {
+      mqttserver = support.buildMqttServer(done);
+    });
+
+    after(function (done) {
+      mqttserver.close(done);
+    });
+
+    it('should support topic string in construct options', function (done) {
+      var client = remjson.client.mqtt(mqttserver.url, '$foo');
+      client.options.topic.should.equal('$foo');
+      client.options.timeout.should.equal(100);
+      client.close(done);
+    });
+
+    it('should support timeout in request options', function (done) {
+      var client = remjson.client.mqtt(mqttserver.url, {topic: '$foo', timeout: 54321});
+      client.options.topic.should.equal('$foo');
+      client.options.timeout.should.equal(54321);
+      client.close(done);
+    });
+
+    it('should support timeout number in request options', function (done) {
+      var client = remjson.client.mqtt(mqttserver.url, {topic: '$foo', timeout: 54321});
+      client.request('unknown', [], undefined, 1, function (err) {
+        should.exist(err);
+        err.name.should.equal('TimeoutError');
+        err.timeout.should.equal(1);
+        client.close(done);
+      });
+    });
+
+    it('should support mqtt client and not owned the client', function (done) {
+      var mqttclient = mqttr.connect(mqttserver.url);
+      mqttclient.ready(function () {
+        var client = remjson.client.mqtt(mqttclient, '$foo');
+        client.client.should.equal(mqttclient);
+        client.topic.should.equal('$foo');
+        client.ready(function () {
+          client.close(function () {
+            mqttclient.connected.should.ok();
+            mqttclient.end(done);
+          });
+        });
+      });
+    });
+
+    it('should ignore non-id response', function (done) {
+      var mqttclient = mqttr.connect(mqttserver.url);
+      mqttclient.subscribe('$foo', function (topic, payload) {
+        topic.should.equal('$foo');
+        should.exist(payload.id);
+        payload.method.should.equal('bar');
+        delete payload.id;
+        should.not.exist(payload.id);
+        mqttclient.publish('$foo/reply', payload);
+      });
+
+      var client = remjson.client.mqtt(mqttserver.url, '$foo');
+      // timeout 1s is enough to receive response
+      client.request('bar', [1], {timeout: 1000}, function (err, error, result) {
+        should.exist(err);
+        err.name.should.equal('TimeoutError');
+        err.timeout.should.equal(1000);
+        should.not.exist(error);
+        should.not.exist(result);
+        done();
+      });
+    });
   });
 
   describe('integration', function () {
