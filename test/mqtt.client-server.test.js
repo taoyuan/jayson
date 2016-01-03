@@ -128,7 +128,10 @@ describe('RemJson.Mqtt', function () {
         err.timeout.should.equal(1000);
         should.not.exist(error);
         should.not.exist(result);
-        done();
+        client.close(function () {
+          mqttclient.connected.should.ok();
+          mqttclient.end(done);
+        });
       });
     });
   });
