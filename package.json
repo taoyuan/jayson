@@ -65,6 +65,7 @@
   "dependencies": {
     "JSONStream": "1.0.7",
     "commander": "2.9.0",
+    "errors": "^0.3.0",
     "eyes": "0.1.8",
     "lodash": "3.10.1",
     "mqttr": "^1.1.2"
