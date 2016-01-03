@@ -1,7 +1,7 @@
 "use strict";
 
 var should = require('should');
-var _ = require('lodash');
+var mqttr = require('mqttr');
 var remjson = require(__dirname + '/../');
 var support = require(__dirname + '/support');
 var common = support.common;
@@ -24,6 +24,42 @@ var coder = {
 
 describe('RemJson.Mqtt', function () {
 
+  var mqttserver = support.buildMqttServer();
+
+  after(function (done) {
+    mqttserver.close(done);
+  });
+
+  describe('server', function () {
+
+    it('should support mqtt client and not owned the client', function (done) {
+      var mqttclient = mqttr.connect(mqttserver.url);
+      mqttclient.ready(function () {
+        var server = remjson.server(support.server.methods, support.server.options).mqtt(mqttclient, '$foo');
+        server.client.should.equal(mqttclient);
+        server.topic.should.equal('$foo');
+        server.ready(function () {
+          server.close(function () {
+            mqttclient.connected.should.ok();
+            mqttclient.end(done);
+          });
+        });
+      });
+    });
+
+    it('should support mqtt url and owned the mqtt client', function (done) {
+      var server = remjson.server(support.server.methods, support.server.options).mqtt(mqttserver.url, '$foo');
+      server.topic.should.equal('$foo');
+      server.ready(function () {
+        server.close(function () {
+          server.client.connected.should.not.ok();
+          done();
+        });
+      });
+    });
+
+  });
+
   describe('integration', function () {
 
     var options = {
@@ -31,7 +67,6 @@ describe('RemJson.Mqtt', function () {
       coder: coder
     };
 
-    var mqttserver = buildMqttServer();
     var server = remjson.server(support.server.methods, support.server.options).mqtt(mqttserver.url, options);
     var client = remjson.client.mqtt(mqttserver.url, options);
 
@@ -43,9 +78,7 @@ describe('RemJson.Mqtt', function () {
 
     after(function (done) {
       client.close(function () {
-        server.close(function () {
-          mqttserver.close(done);
-        });
+        server.close(done);
       });
     });
 
@@ -74,21 +107,4 @@ describe('RemJson.Mqtt', function () {
       });
     })
   });
-
 });
-
-function buildMqttServer(port, cb) {
-  if (typeof port === 'function') {
-    cb = port;
-    port = undefined;
-  }
-
-  port = port || 43210;
-
-  var Server = require('mosca').Server;
-  var server = new Server({port: port}, cb);
-  server.url = 'mqtt://localhost:' + port;
-  server.port = port;
-  return server;
-}
-

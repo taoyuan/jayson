@@ -79,3 +79,30 @@ exports.server.options = {
   }
 
 };
+
+var next_port = 43210;
+
+exports.buildMqttServer = function buildMqttServer(options, cb) {
+  if (typeof options === 'function') {
+    cb = options;
+    options = undefined;
+  }
+
+  if (typeof options === 'number') {
+    options = {port: options};
+  }
+
+  options = options || {};
+
+  if (!options.port) options.port = next_port++;
+  cb = cb || function () {};
+
+  console.log('build mqtt server', options);
+
+  var Server = require('mosca').Server;
+  var server = new Server(options, cb);
+  server.url = 'mqtt://localhost:' + options.port;
+  server.port = options.port;
+  return server;
+}
+
