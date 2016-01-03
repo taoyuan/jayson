@@ -50,6 +50,18 @@ describe('RemJson.Mqtt', function () {
     });
 
     describe('common tests', common(client));
+
+    describe('request', function () {
+      it('should return immediately with timeout is 0', function (done) {
+        var a = 11, b = 12;
+        client.request('add', [a, b], {timeout: 0}, function (err, error, result) {
+          should.not.exist(err);
+          should.not.exist(error);
+          should.not.exist(result);
+          done();
+        });
+      });
+    })
   });
 
 });
