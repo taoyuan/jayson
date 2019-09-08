@@ -63,27 +63,27 @@
     }
   },
   "dependencies": {
-    "JSONStream": "1.0.7",
-    "commander": "2.9.0",
+    "JSONStream": "1.3.5",
+    "commander": "3.0.1",
     "errors": "^0.3.0",
     "eyes": "0.1.8",
-    "lodash": "3.10.1",
-    "mqttr": "^1.1.2"
+    "lodash": "4.17.15",
+    "mqttr": "^2.0.7"
   },
   "devDependencies": {
     "body-parser": "^1.14.2",
-    "connect": "3.4.0",
-    "gulp": "^3.9.0",
+    "connect": "3.7.0",
+    "gulp": "^4.0.2",
     "gulp-coveralls": "^0.1.4",
     "gulp-exclude-gitignore": "^1.0.0",
-    "gulp-istanbul": "^0.10.3",
-    "gulp-mocha": "^2.2.0",
-    "gulp-nsp": "^2.2.1",
+    "gulp-istanbul": "^1.1.3",
+    "gulp-mocha": "^7.0.1",
+    "gulp-nsp": "^3.0.1",
     "gulp-plumber": "^1.0.1",
-    "mocha": "2.3.4",
+    "mocha": "6.2.0",
     "mosca": "taoyuan/mosca",
-    "pass-stream": "0.1.3",
-    "should": "8.0.2"
+    "pass-stream": "1.0.0",
+    "should": "13.2.3"
   },
   "optionalDependencies": {
     "logs": "^1.0.0"
